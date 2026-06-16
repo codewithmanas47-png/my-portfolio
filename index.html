@@ -1,0 +1,1478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Muhammad Anas — Full Stack Developer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;400;500;600;700;800&family=Lora:ital,wght@0,400;0,500;1,400;1,500&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#07090f;--bg2:#0c0f1a;--cream:#0f1525;
+  --ink:#e8edf5;--ink2:#7a8aaa;--ink3:#3a4560;
+  --accent:#3b82f6;--accent2:#60a5fa;--accent3:#818cf8;
+  --green2:#10b981;--border:rgba(59,130,246,0.1);--border2:rgba(59,130,246,0.22);
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--ink);font-family:'Bricolage Grotesque',sans-serif;line-height:1.6;overflow-x:hidden;cursor:none;}
+
+/* CURSOR */
+#cur{position:fixed;top:0;left:0;z-index:9999;pointer-events:none;}
+#cur-ring{width:38px;height:38px;border:1.5px solid rgba(96,165,250,.7);border-radius:50%;position:absolute;transform:translate(-50%,-50%);transition:width .2s,height .2s,background .2s,border-color .2s;}
+#cur-dot{width:6px;height:6px;background:var(--accent2);border-radius:50%;position:absolute;transform:translate(-50%,-50%);}
+body.h #cur-ring{width:55px;height:55px;background:rgba(59,130,246,.08);border-color:var(--accent);}
+
+/* BG */
+#star-canvas{position:fixed;inset:0;z-index:0;pointer-events:none;}
+.aurora{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;}
+.aorb{position:absolute;border-radius:50%;filter:blur(130px);}
+.aorb:nth-child(1){width:700px;height:700px;background:radial-gradient(circle,rgba(59,130,246,.16),transparent 70%);top:-150px;right:-150px;animation:af 18s ease-in-out infinite;}
+.aorb:nth-child(2){width:500px;height:500px;background:radial-gradient(circle,rgba(129,140,248,.11),transparent 70%);bottom:5%;left:-120px;animation:af 14s ease-in-out infinite -6s;}
+.aorb:nth-child(3){width:350px;height:350px;background:radial-gradient(circle,rgba(6,182,212,.09),transparent 70%);top:45%;right:8%;animation:af 20s ease-in-out infinite -11s;}
+@keyframes af{0%,100%{transform:translate(0,0) scale(1);}33%{transform:translate(50px,-70px) scale(1.08);}66%{transform:translate(-40px,50px) scale(.94);}}
+.grid-bg{position:fixed;inset:0;z-index:0;pointer-events:none;background-image:linear-gradient(rgba(59,130,246,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(59,130,246,.025) 1px,transparent 1px);background-size:72px 72px;}
+.noise{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.4;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='250' height='250'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='250' height='250' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1rem 3rem;display:flex;align-items:center;justify-content:space-between;background:rgba(7,9,15,.88);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);transition:padding .3s;}
+.nav-logo{font-size:1rem;font-weight:800;letter-spacing:-.03em;}
+.nav-logo span{color:var(--accent);}
+.nav-links{display:flex;gap:2.2rem;list-style:none;}
+.nav-links a{color:var(--ink2);text-decoration:none;font-size:.8rem;font-weight:500;letter-spacing:.04em;transition:color .2s;position:relative;}
+.nav-links a::after{content:'';position:absolute;bottom:-3px;left:0;width:0;height:1.5px;background:var(--accent);transition:width .25s;}
+.nav-links a:hover{color:var(--ink);}
+.nav-links a:hover::after{width:100%;}
+.nav-cta{background:var(--accent);color:#fff;padding:.52rem 1.3rem;border-radius:100px;font-size:.77rem;font-weight:600;text-decoration:none;transition:all .25s;box-shadow:0 0 20px rgba(59,130,246,.3);}
+.nav-cta:hover{background:var(--accent2);box-shadow:0 0 35px rgba(96,165,250,.45);transform:translateY(-1px);}
+
+/* HERO */
+section{position:relative;z-index:1;}
+.hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;align-items:center;padding:7rem 3rem 4rem;max-width:1200px;margin:0 auto;gap:4rem;}
+.hero-tag{font-size:.7rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin-bottom:1.8rem;display:flex;align-items:center;gap:.7rem;opacity:0;animation:slideUp .7s ease .3s forwards;}
+.hero-tag::before{content:'';width:28px;height:1.5px;background:var(--accent);}
+.hero-h1{font-size:clamp(2.8rem,5.2vw,4.8rem);font-weight:800;line-height:1;letter-spacing:-.04em;margin-bottom:1.2rem;}
+.hero-h1 .line{display:block;overflow:hidden;}
+.hero-h1 .line span{display:block;transform:translateY(110%);animation:lineUp .8s cubic-bezier(.16,1,.3,1) forwards;}
+.hero-h1 .line:nth-child(1) span{animation-delay:.4s;}
+.hero-h1 .line:nth-child(2) span{animation-delay:.55s;}
+.hero-h1 .line:nth-child(3) span{animation-delay:.7s;}
+.hero-h1 .line:nth-child(4) span{animation-delay:.85s;}
+.hero-h1 em{font-family:'Lora',serif;font-style:italic;font-weight:400;color:var(--accent2);}
+@keyframes lineUp{to{transform:translateY(0);}}
+@keyframes slideUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+.hero-sub{color:var(--ink2);font-size:1rem;line-height:1.8;max-width:460px;margin-bottom:2.5rem;opacity:0;animation:slideUp .7s ease 1s forwards;}
+.hero-btns{display:flex;gap:1rem;flex-wrap:wrap;opacity:0;animation:slideUp .7s ease 1.15s forwards;}
+.btn-primary{background:var(--accent);color:#fff;padding:.85rem 2rem;border-radius:100px;font-size:.85rem;font-weight:600;text-decoration:none;transition:all .25s;display:inline-flex;align-items:center;gap:.5rem;box-shadow:0 0 24px rgba(59,130,246,.35);position:relative;overflow:hidden;}
+.btn-primary::before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.15),transparent);transform:translateX(-100%);transition:transform .5s;}
+.btn-primary:hover::before{transform:translateX(100%);}
+.btn-primary:hover{box-shadow:0 0 40px rgba(59,130,246,.55);transform:translateY(-2px);}
+.btn-ghost{background:transparent;color:var(--ink);padding:.85rem 2rem;border-radius:100px;font-size:.85rem;font-weight:600;text-decoration:none;border:1.5px solid var(--border2);transition:all .25s;display:inline-flex;align-items:center;gap:.5rem;}
+.btn-ghost:hover{border-color:var(--accent);color:var(--accent);box-shadow:0 0 20px rgba(59,130,246,.15);}
+
+/* HERO RIGHT */
+.hero-right{opacity:0;animation:slideUp .8s ease 1.3s forwards;}
+.hero-card{background:var(--cream);border:1px solid var(--border2);border-radius:18px;padding:2rem;animation:cardPulse 5s ease-in-out infinite;}
+@keyframes cardPulse{0%,100%{box-shadow:0 0 40px rgba(59,130,246,.08);}50%{box-shadow:0 0 60px rgba(59,130,246,.18);}}
+.hero-card-label{font-size:.65rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3);margin-bottom:1.2rem;}
+.hero-metrics{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:1.5rem;}
+.hm{background:var(--cream);padding:1.2rem 1rem;transition:background .2s;}
+.hm:hover{background:rgba(59,130,246,.06);}
+.hm-num{font-size:2rem;font-weight:800;letter-spacing:-.04em;color:var(--accent2);line-height:1;margin-bottom:.2rem;}
+.hm-label{font-size:.7rem;color:var(--ink3);}
+.hero-status{display:flex;align-items:center;gap:.8rem;font-size:.77rem;color:var(--green2);}
+.status-dot{width:8px;height:8px;background:var(--green2);border-radius:50%;animation:pulse 2s ease-in-out infinite;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.4;transform:scale(1.6);}}
+.hero-tags{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:1.2rem;}
+.htag{padding:.28rem .75rem;background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.22);border-radius:100px;font-size:.68rem;font-weight:500;color:var(--accent2);transition:all .2s;}
+.htag:hover{background:rgba(59,130,246,.2);transform:translateY(-2px);}
+
+/* SCROLL HINT */
+.scroll-hint{position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:.5rem;color:var(--ink3);font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;opacity:0;animation:slideUp .7s ease 2s forwards;}
+.scroll-mouse{width:20px;height:32px;border:1.5px solid rgba(59,130,246,.35);border-radius:10px;display:flex;justify-content:center;padding-top:5px;}
+.scroll-wheel{width:2.5px;height:5px;background:var(--accent2);border-radius:2px;animation:sw 1.8s ease-in-out infinite;}
+@keyframes sw{0%{transform:translateY(0);opacity:1;}100%{transform:translateY(10px);opacity:0;}}
+
+/* TICKER */
+.ticker-wrap{border-top:1px solid var(--border);border-bottom:1px solid var(--border);overflow:hidden;padding:.7rem 0;background:rgba(15,21,37,.9);}
+.ticker-wrap:hover .ticker{animation-play-state:paused;}
+.ticker{display:flex;animation:tick 28s linear infinite;white-space:nowrap;}
+.ticker-item{font-size:.7rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);padding:0 1.8rem;display:flex;align-items:center;gap:.7rem;flex-shrink:0;}
+.ticker-item span{color:var(--accent);}
+@keyframes tick{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+
+/* SHARED */
+.container{max-width:1200px;margin:0 auto;padding:0 3rem;}
+.section-pad{padding:7rem 0;}
+.sec-label{font-size:.67rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin-bottom:1.2rem;display:flex;align-items:center;gap:.7rem;}
+.sec-label::before{content:'';width:26px;height:1.5px;background:var(--accent);}
+.sec-h2{font-size:clamp(2rem,4vw,3.2rem);font-weight:800;letter-spacing:-.04em;line-height:1.05;margin-bottom:1rem;}
+.sec-h2 em{font-family:'Lora',serif;font-style:italic;font-weight:400;color:var(--accent2);}
+.sec-sub{color:var(--ink2);font-size:.95rem;max-width:540px;line-height:1.8;}
+.divider{height:1px;background:linear-gradient(90deg,transparent,rgba(59,130,246,.2),transparent);}
+
+/* PROJECTS */
+.projects-section{background:var(--bg2);}
+.proj-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5px;background:var(--border);border:1px solid var(--border);border-radius:14px;overflow:hidden;margin-top:3.5rem;}
+.proj-card{background:var(--bg2);padding:2.2rem 2rem;display:flex;flex-direction:column;gap:1rem;position:relative;overflow:hidden;cursor:none;text-decoration:none;color:inherit;transition:background .25s,transform .3s cubic-bezier(.16,1,.3,1),box-shadow .3s;}
+.proj-card::before{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:transparent;transition:background .3s;}
+.proj-card::after{content:'';position:absolute;inset:0;background:radial-gradient(circle at var(--mx,50%) var(--my,50%),rgba(59,130,246,.07),transparent 60%);opacity:0;transition:opacity .3s;}
+.proj-card:hover{background:#0f1525;transform:translateY(-3px);box-shadow:0 12px 40px rgba(0,0,0,.5),0 0 0 1px rgba(59,130,246,.3);}
+.proj-card:hover::before{background:var(--accent);}
+.proj-card:hover::after{opacity:1;}
+.proj-num{font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--ink3);}
+.proj-title{font-size:1.15rem;font-weight:700;letter-spacing:-.02em;line-height:1.2;transition:color .2s;}
+.proj-card:hover .proj-title{color:var(--accent2);}
+.proj-url{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--accent);opacity:.7;}
+.proj-desc{color:var(--ink2);font-size:.8rem;line-height:1.8;flex:1;}
+.proj-footer{display:flex;align-items:center;justify-content:space-between;margin-top:.5rem;}
+.proj-tags{display:flex;gap:.4rem;flex-wrap:wrap;}
+.ptag{padding:.2rem .6rem;border-radius:100px;font-size:.62rem;font-weight:600;letter-spacing:.04em;}
+.ptag.fe{background:rgba(59,130,246,.14);color:var(--accent2);}
+.ptag.be{background:rgba(96,165,250,.1);color:#93c5fd;}
+.ptag.wp{background:rgba(16,185,129,.1);color:#34d399;}
+.ptag.wf{background:rgba(129,140,248,.1);color:#a5b4fc;}
+.ptag.sh{background:rgba(251,191,36,.1);color:#fbbf24;}
+.proj-arrow{width:32px;height:32px;border:1px solid var(--border2);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.85rem;transition:all .25s;}
+.proj-card:hover .proj-arrow{background:var(--accent);border-color:var(--accent);color:#fff;transform:rotate(-45deg);}
+
+/* ══════════════════════════════════════
+   CASE STUDIES — FULL LIVE PREVIEW
+══════════════════════════════════════ */
+:root{
+  --bg:#07090f;--bg2:#0c0f1a;--cream:#0f1525;
+  --ink:#e8edf5;--ink2:#7a8aaa;--ink3:#3a4560;
+  --accent:#3b82f6;--accent2:#60a5fa;
+  --green:#10b981;--red:#f87171;--amber:#fbbf24;
+  --border:rgba(59,130,246,.1);--border2:rgba(59,130,246,.22);
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--ink);font-family:'Bricolage Grotesque',sans-serif;line-height:1.6;overflow-x:hidden;}
+
+/* BG */
+#star-canvas{position:fixed;inset:0;z-index:0;pointer-events:none;}
+.aurora{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;}
+.aorb{position:absolute;border-radius:50%;filter:blur(130px);}
+.aorb:nth-child(1){width:600px;height:600px;background:radial-gradient(circle,rgba(59,130,246,.14),transparent 70%);top:-100px;right:-100px;animation:af 18s ease-in-out infinite;}
+.aorb:nth-child(2){width:450px;height:450px;background:radial-gradient(circle,rgba(129,140,248,.1),transparent 70%);bottom:10%;left:-100px;animation:af 14s ease-in-out infinite -6s;}
+@keyframes af{0%,100%{transform:translate(0,0);}50%{transform:translate(40px,-50px);}}
+.grid-bg{position:fixed;inset:0;z-index:0;pointer-events:none;background-image:linear-gradient(rgba(59,130,246,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(59,130,246,.025) 1px,transparent 1px);background-size:72px 72px;}
+
+/* PAGE */
+.page{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:4rem 2.5rem;}
+
+/* HEADER */
+.page-header{text-align:center;margin-bottom:5rem;}
+.page-tag{font-size:.68rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin-bottom:1rem;display:flex;align-items:center;justify-content:center;gap:.6rem;}
+.page-tag::before,.page-tag::after{content:'';width:24px;height:1.5px;background:var(--accent);}
+.page-h1{font-size:clamp(2.2rem,5vw,3.8rem);font-weight:800;letter-spacing:-.04em;line-height:1.05;margin-bottom:.8rem;}
+.page-h1 em{font-family:'Lora',serif;font-style:italic;font-weight:400;color:var(--accent2);}
+.page-sub{color:var(--ink2);font-size:.95rem;max-width:520px;margin:0 auto;}
+
+/* CASE CARD */
+.case-card{background:var(--cream);border:1px solid var(--border);border-radius:20px;overflow:hidden;margin-bottom:2rem;transition:border-color .3s;}
+.case-card:hover{border-color:var(--border2);}
+
+/* CASE TOP */
+.case-top{padding:2rem 2.5rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:1.5rem;flex-wrap:wrap;}
+.case-top-left{display:flex;align-items:center;gap:1.2rem;}
+.case-num{width:44px;height:44px;border-radius:10px;background:rgba(59,130,246,.12);border:1px solid rgba(59,130,246,.25);display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:600;color:var(--accent2);flex-shrink:0;}
+.case-industry{font-size:.6rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3);margin-bottom:.25rem;}
+.case-title{font-size:1.1rem;font-weight:700;letter-spacing:-.02em;}
+.case-chips{display:flex;gap:.4rem;flex-wrap:wrap;}
+.chip{padding:.2rem .6rem;border-radius:100px;font-size:.6rem;font-weight:700;letter-spacing:.04em;}
+.chip.red{background:rgba(248,113,113,.12);color:#f87171;border:1px solid rgba(248,113,113,.2);}
+.chip.green{background:rgba(16,185,129,.12);color:#34d399;border:1px solid rgba(16,185,129,.2);}
+.chip.blue{background:rgba(59,130,246,.12);color:var(--accent2);border:1px solid rgba(59,130,246,.2);}
+.chip.amber{background:rgba(251,191,36,.1);color:#fbbf24;border:1px solid rgba(251,191,36,.18);}
+
+/* BEFORE/AFTER SPLIT */
+.ba-split{display:grid;grid-template-columns:1fr 1fr;gap:0;border-bottom:1px solid var(--border);}
+.ba-col{padding:1.8rem 2rem;}
+.ba-col:first-child{border-right:1px solid var(--border);}
+.ba-col-head{display:flex;align-items:center;gap:.5rem;font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:1.2rem;padding:.32rem .85rem;border-radius:100px;width:fit-content;}
+.ba-col-head.bef{background:rgba(248,113,113,.1);color:#f87171;border:1px solid rgba(248,113,113,.2);}
+.ba-col-head.aft{background:rgba(59,130,246,.12);color:var(--accent2);border:1px solid rgba(59,130,246,.22);}
+
+/* SVG SCREENS */
+.screen-wrap{border-radius:12px;overflow:hidden;border:1px solid rgba(255,255,255,.06);background:#020409;}
+.screen-wrap svg{display:block;width:100%;}
+
+/* BOTTOM SECTION */
+.case-bottom{padding:2rem 2.5rem;display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;}
+.cs-box{padding:1.2rem 1.4rem;border-radius:12px;}
+.cs-box.chal{background:rgba(248,113,113,.05);border:1px solid rgba(248,113,113,.12);}
+.cs-box.sol{background:rgba(59,130,246,.05);border:1px solid rgba(59,130,246,.12);}
+.cs-box-hd{font-size:.65rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;margin-bottom:.7rem;display:flex;align-items:center;gap:.4rem;}
+.cs-box.chal .cs-box-hd{color:#f87171;}
+.cs-box.sol .cs-box-hd{color:var(--accent2);}
+.cs-box p{font-size:.82rem;color:var(--ink2);line-height:1.85;}
+
+/* RESULTS */
+.results{display:grid;grid-template-columns:repeat(3,1fr);gap:.7rem;padding:0 2.5rem 2rem;}
+.res-item{background:var(--bg);border:1px solid var(--border2);border-radius:10px;padding:.9rem 1rem;text-align:center;transition:all .2s;}
+.res-item:hover{border-color:rgba(59,130,246,.4);transform:translateY(-2px);}
+.res-num{font-size:1.5rem;font-weight:800;letter-spacing:-.04em;color:var(--accent2);line-height:1;}
+.res-lbl{font-size:.65rem;color:var(--ink2);margin-top:.2rem;}
+
+/* FADE IN */
+.fi{opacity:0;transform:translateY(24px);transition:opacity .65s ease,transform .65s ease;}
+.fi.v{opacity:1;transform:translateY(0);}
+
+@media(max-width:750px){
+  .ba-split,.case-bottom{grid-template-columns:1fr;}
+  .ba-col:first-child{border-right:none;border-bottom:1px solid var(--border);}
+  .results{grid-template-columns:1fr 1fr;}
+}
+/* BACKEND */
+.backend-section{background:#05070d;}
+.backend-section .sec-label,.backend-section .sec-h2{color:rgba(232,237,245,.9);}
+.backend-section .sec-h2 em{color:var(--accent2);}
+.backend-section .sec-label::before{background:var(--accent2);}
+.backend-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:2rem;margin-top:3.5rem;}
+
+/* BACKEND BEFORE/AFTER */
+.be-ba-wrap{margin-bottom:2rem;}
+.be-ba-title{font-size:.68rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--accent2);margin-bottom:1rem;display:flex;align-items:center;gap:.5rem;}
+.be-ba-title::before{content:'';width:20px;height:1px;background:var(--accent2);}
+.be-ba-grid{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;}
+.be-ba-panel{border-radius:10px;overflow:hidden;border:1px solid;height:190px;display:flex;flex-direction:column;}
+.be-ba-panel.before-panel{border-color:rgba(248,113,113,.2);background:rgba(248,113,113,.03);}
+.be-ba-panel.after-panel{border-color:rgba(59,130,246,.2);background:rgba(59,130,246,.03);}
+.be-ba-top{padding:.5rem .8rem;display:flex;align-items:center;gap:.4rem;border-bottom:1px solid rgba(255,255,255,.05);}
+.be-ba-panel.before-panel .be-ba-top{background:rgba(248,113,113,.05);}
+.be-ba-panel.after-panel .be-ba-top{background:rgba(59,130,246,.05);}
+.be-panel-lbl{font-size:.58rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-left:.3rem;}
+.before-panel .be-panel-lbl{color:#f87171;}
+.after-panel .be-panel-lbl{color:var(--accent2);}
+.be-ba-content{flex:1;padding:.8rem;font-family:'JetBrains Mono',monospace;font-size:.62rem;line-height:1.9;overflow:hidden;}
+.be-bad{color:rgba(248,113,113,.6);}
+.be-good{color:#34d399;}
+.be-code{color:var(--accent2);}
+.be-comment{color:#334466;}
+.be-key{color:#c084fc;}
+.be-str{color:#fbbf24;}
+
+.terminal{background:#040608;border:1px solid rgba(59,130,246,.15);border-radius:12px;overflow:hidden;font-family:'JetBrains Mono',monospace;font-size:.76rem;line-height:1.95;box-shadow:0 0 60px rgba(59,130,246,.08);}
+.term-bar{background:#07090f;padding:.7rem 1rem;display:flex;align-items:center;gap:.5rem;border-bottom:1px solid rgba(59,130,246,.1);}
+.td{width:10px;height:10px;border-radius:50%;}
+.td.r{background:#ff5f57;}.td.a{background:#febc2e;}.td.g{background:#28c840;}
+.term-title{font-size:.65rem;color:rgba(255,255,255,.25);margin:0 auto;letter-spacing:.06em;}
+.term-body{padding:1.4rem;}
+.tc{color:#334466;}.tk{color:#c084fc;}.tv{color:#34d399;}.ts{color:#fbbf24;}.tp{color:#60a5fa;}.tn{color:#f87171;}
+.blink-cur{display:inline-block;width:7px;height:13px;background:var(--accent2);vertical-align:middle;animation:blink .9s step-end infinite;margin-left:2px;}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:0;}}
+
+.api-list{display:flex;flex-direction:column;gap:.75rem;}
+.api-item{background:rgba(59,130,246,.04);border:1px solid rgba(59,130,246,.12);border-radius:8px;overflow:hidden;transition:all .25s;}
+.api-item:hover{border-color:rgba(59,130,246,.35);box-shadow:0 0 24px rgba(59,130,246,.1);transform:translateX(4px);}
+.api-top{padding:.85rem 1.2rem;display:flex;align-items:center;gap:.8rem;}
+.method{padding:.18rem .55rem;border-radius:3px;font-size:.62rem;font-weight:700;letter-spacing:.06em;}
+.get{background:rgba(52,211,153,.15);color:#34d399;}
+.post{background:rgba(96,165,250,.15);color:#60a5fa;}
+.patch{background:rgba(251,191,36,.15);color:#fbbf24;}
+.del{background:rgba(248,113,113,.15);color:#f87171;}
+.api-path{font-size:.76rem;color:rgba(232,237,245,.8);}
+.api-ms{margin-left:auto;font-size:.62rem;color:#34d399;}
+.api-bot{padding:.45rem 1.2rem .8rem;font-size:.7rem;color:rgba(232,237,245,.35);}
+.be-skills{margin-top:1.5rem;display:grid;grid-template-columns:1fr 1fr;gap:.9rem;}
+.be-skill{background:rgba(59,130,246,.05);border:1px solid rgba(59,130,246,.12);border-radius:8px;padding:1.1rem;transition:all .25s;}
+.be-skill:hover{background:rgba(59,130,246,.1);border-color:rgba(59,130,246,.3);transform:translateY(-3px);box-shadow:0 8px 24px rgba(59,130,246,.12);}
+.be-skill-icon{font-size:1.3rem;margin-bottom:.5rem;}
+.be-skill-title{font-size:.82rem;font-weight:600;color:rgba(232,237,245,.9);margin-bottom:.25rem;}
+.be-skill-desc{font-size:.68rem;color:rgba(232,237,245,.35);line-height:1.7;}
+
+/* PROCESS */
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background: #05070d;
+  color: #e6f0ff;
+}
+
+/* Section */
+.process-section {
+  padding: 80px 20px;
+  max-width: 900px;
+  margin: auto;
+}
+
+/* Timeline */
+.timeline {
+  position: relative;
+  padding-left: 30px;
+}
+
+/* Animated Line */
+.timeline::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 2px;
+  height: 100%;
+  background: #1f3b73;
+}
+
+/* Phase */
+.phase {
+  position: relative;
+  margin-bottom: 50px;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: 0.6s ease;
+}
+
+/* Show animation */
+.phase.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Circle */
+.circle {
+  position: absolute;
+  left: -14px;
+  top: 5px;
+  width: 28px;
+  height: 28px;
+  background: #4da3ff;
+  color: #000;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 28px;
+  font-weight: bold;
+  box-shadow: 0 0 15px #4da3ff88;
+}
+
+/* Card */
+.content {
+  background: #0b1120;
+  padding: 20px;
+  border-radius: 12px;
+  border: 1px solid #1f3b73;
+  transition: 0.3s;
+}
+
+/* Hover */
+.content:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 0 25px #4da3ff44;
+}
+
+/* Title */
+.content h3 {
+  margin-top: 0;
+  color: #ffffff;
+}
+
+/* Text */
+.content p {
+  color: #9bb3d9;
+  line-height: 1.6;
+}
+
+/* Tags */
+.tags span {
+  display: inline-block;
+  background: #101a33;
+  color: #4da3ff;
+  padding: 6px 12px;
+  margin: 5px 5px 0 0;
+  border-radius: 20px;
+  font-size: 12px;
+  border: 1px solid #1f3b73;
+  transition: 0.3s;
+}
+
+/* Tag hover */
+.tags span:hover {
+  background: #4da3ff;
+  color: #000;
+  box-shadow: 0 0 10px #4da3ff88;
+}
+/* CONTACT */
+.contact-section{padding:8rem 0;background:var(--bg);position:relative;overflow:hidden;}
+.contact-glow{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:600px;height:600px;background:radial-gradient(circle,rgba(59,130,246,.1),transparent 70%);pointer-events:none;animation:cg 4s ease-in-out infinite;}
+@keyframes cg{0%,100%{opacity:.6;transform:translate(-50%,-50%) scale(1);}50%{opacity:1;transform:translate(-50%,-50%) scale(1.1);}}
+
+/* CONTACT PROJECTS STRIP */
+.contact-projects-strip{max-width:1200px;margin:0 auto 5rem;padding:0 3rem;}
+.cps-title{font-size:.67rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin-bottom:1.5rem;display:flex;align-items:center;gap:.7rem;}
+.cps-title::before{content:'';width:26px;height:1.5px;background:var(--accent);}
+.cps-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;}
+.cps-card{border-radius:12px;overflow:hidden;border:1px solid var(--border);position:relative;group transition:all .3s;}
+.cps-card:hover{border-color:var(--border2);box-shadow:0 0 30px rgba(59,130,246,.12);}
+.cps-preview{height:160px;position:relative;overflow:hidden;background:var(--cream);}
+.cps-preview iframe{width:200%;height:200%;transform:scale(.5);transform-origin:top left;pointer-events:none;border:none;}
+.cps-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,transparent 50%,rgba(7,9,15,.95));z-index:2;}
+.cps-info{padding:1rem 1.2rem;background:var(--cream);}
+.cps-name{font-size:.88rem;font-weight:700;margin-bottom:.25rem;letter-spacing:-.01em;}
+.cps-url{font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--accent);opacity:.7;margin-bottom:.5rem;}
+.cps-tags{display:flex;gap:.3rem;flex-wrap:wrap;}
+.cps-tag{padding:.15rem .5rem;border-radius:100px;font-size:.58rem;font-weight:600;}
+.cps-tag.fe{background:rgba(59,130,246,.14);color:var(--accent2);}
+.cps-tag.be{background:rgba(16,185,129,.1);color:#34d399;}
+.cps-tag.wp{background:rgba(129,140,248,.1);color:#a5b4fc);}
+.cps-open{position:absolute;top:.6rem;right:.6rem;z-index:3;background:rgba(59,130,246,.9);color:#fff;font-size:.58rem;font-weight:700;padding:.25rem .6rem;border-radius:100px;text-decoration:none;opacity:0;transition:opacity .2s;}
+.cps-card:hover .cps-open{opacity:1;}
+
+.contact-inner{max-width:680px;margin:0 auto;text-align:center;padding:0 2rem;position:relative;}
+.contact-h{font-size:clamp(2.5rem,6vw,4.2rem);font-weight:800;letter-spacing:-.05em;line-height:1;color:var(--ink);margin-bottom:1.5rem;}
+.contact-h em{font-family:'Lora',serif;font-style:italic;font-weight:400;color:var(--accent2);}
+.contact-sub{color:var(--ink2);line-height:1.8;margin-bottom:2.5rem;}
+.contact-email-wrap{display:inline-block;margin-bottom:2.8rem;position:relative;}
+.contact-email-wrap::before{content:'';position:absolute;inset:-12px -20px;background:radial-gradient(ellipse,rgba(59,130,246,.12),transparent 70%);border-radius:12px;opacity:0;transition:opacity .3s;}
+.contact-email-wrap:hover::before{opacity:1;}
+.contact-email{font-size:1.2rem;font-weight:700;color:var(--ink);text-decoration:none;border-bottom:2px solid var(--accent);padding-bottom:.2rem;letter-spacing:-.02em;transition:color .2s;}
+.contact-email:hover{color:var(--accent2);}
+.contact-socials{display:flex;justify-content:center;gap:.7rem;flex-wrap:wrap;}
+.soc-btn{padding:.55rem 1.2rem;border:1px solid var(--border2);border-radius:100px;color:var(--ink2);text-decoration:none;font-size:.73rem;font-weight:500;transition:all .22s;}
+.soc-btn:hover{border-color:var(--accent);color:var(--accent);background:rgba(59,130,246,.08);transform:translateY(-2px);}
+
+footer{padding:1.4rem 3rem;border-top:1px solid var(--border);background:var(--bg2);display:flex;align-items:center;justify-content:space-between;}
+footer span{font-size:.7rem;color:var(--ink3);}
+
+/* FADE IN */
+.fi{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s ease;}
+.fi.v{opacity:1;transform:translateY(0);}
+.fi:nth-child(2){transition-delay:.09s;}.fi:nth-child(3){transition-delay:.18s;}.fi:nth-child(4){transition-delay:.27s;}
+.stagger .proj-card,.stagger .case-card,.stagger .proc-step{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease;}
+.stagger.go .proj-card:nth-child(1),.stagger.go .case-card:nth-child(1),.stagger.go .proc-step:nth-child(1){opacity:1;transform:none;transition-delay:0s;}
+.stagger.go .proj-card:nth-child(2),.stagger.go .case-card:nth-child(2),.stagger.go .proc-step:nth-child(2){opacity:1;transform:none;transition-delay:.07s;}
+.stagger.go .proj-card:nth-child(3),.stagger.go .case-card:nth-child(3),.stagger.go .proc-step:nth-child(3){opacity:1;transform:none;transition-delay:.14s;}
+.stagger.go .proj-card:nth-child(4),.stagger.go .case-card:nth-child(4),.stagger.go .proc-step:nth-child(4){opacity:1;transform:none;transition-delay:.21s;}
+.stagger.go .proj-card:nth-child(5){opacity:1;transform:none;transition-delay:.28s;}
+.stagger.go .proj-card:nth-child(6){opacity:1;transform:none;transition-delay:.35s;}
+.stagger.go .proj-card:nth-child(7){opacity:1;transform:none;transition-delay:.42s;}
+.stagger.go .proj-card:nth-child(8){opacity:1;transform:none;transition-delay:.49s;}
+.stagger.go .proj-card:nth-child(9){opacity:1;transform:none;transition-delay:.56s;}
+.stagger.go .proj-card:nth-child(10){opacity:1;transform:none;transition-delay:.63s;}
+.stagger.go .proj-card:nth-child(11){opacity:1;transform:none;transition-delay:.70s;}
+.stagger.go .proj-card:nth-child(12){opacity:1;transform:none;transition-delay:.77s;}
+
+@media(max-width:900px){
+  nav{padding:.9rem 1.5rem;}.nav-links{display:none;}
+  .hero{grid-template-columns:1fr;padding:7rem 1.5rem 3rem;gap:2rem;}
+  .proj-grid,.ba-split,.cs-grid,.be-ba-grid,.backend-grid,.cps-grid{grid-template-columns:1fr;}
+  .process-grid{grid-template-columns:1fr 1fr;}
+  .container,.contact-projects-strip{padding:0 1.5rem;}
+  .section-pad{padding:5rem 0;}
+  .results-row{grid-template-columns:1fr 1fr;}
+}
+</style>
+</head>
+<body>
+
+<canvas id="star-canvas"></canvas>
+<div class="aurora"><div class="aorb"></div><div class="aorb"></div><div class="aorb"></div></div>
+<div class="grid-bg"></div>
+<div class="noise"></div>
+<div id="cur"><div id="cur-ring"></div><div id="cur-dot"></div></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Muhammad Anas<span>.</span></div>
+  <ul class="nav-links">
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#casestudy">Case Studies</a></li>
+    <li><a href="#backend">Backend</a></li>
+    <li><a href="#process">Process</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Hire Me</a>
+</nav>
+
+<!-- HERO -->
+<section style="position:relative;">
+<div class="hero">
+  <div class="hero-left">
+    <div class="hero-tag">Full Stack Developer · Freelancer</div>
+    <h1 class="hero-h1">
+      <span class="line"><span>I Build</span></span>
+      <span class="line"><span><em>Websites</em></span></span>
+      <span class="line"><span>That Win</span></span>
+      <span class="line"><span>Clients.</span></span>
+    </h1>
+    <p class="hero-sub">Building clean, scalable, and high-performance web experiences with modern development standards. From Karachi to the world.</p>
+    <div class="hero-btns">
+      <a href="#casestudy" class="btn-primary">See My Work ↓</a>
+      <a href="#contact" class="btn-ghost">Let's Talk →</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-card">
+      <div class="hero-card-label">Live Stats · Updated 2026</div>
+      <div class="hero-metrics">
+        <div class="hm"><div class="hm-num" data-target="50">0</div><div class="hm-label">Projects Done</div></div>
+        <div class="hm"><div class="hm-num" data-target="30">0</div><div class="hm-label">Happy Clients</div></div>
+        <div class="hm"><div class="hm-num" data-target="3">0</div><div class="hm-label">Years Exp.</div></div>
+        <div class="hm"><div class="hm-num">100%</div><div class="hm-label">Job Success</div></div>
+      </div>
+      <div class="hero-status"><div class="status-dot"></div>Available for new projects — quick turnaround</div>
+      <div class="hero-tags">
+        <span class="htag">React</span><span class="htag">Next.js</span><span class="htag">Node.js</span>
+        <span class="htag">WordPress</span><span class="htag">Webflow</span><span class="htag">PostgreSQL</span>
+        <span class="htag">Figma</span><span class="htag">Shopify</span>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="scroll-hint"><div class="scroll-mouse"><div class="scroll-wheel"></div></div>Scroll</div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker-wrap">
+  <div class="ticker">
+    <div class="ticker-item">React.js <span>✦</span></div><div class="ticker-item">Next.js <span>✦</span></div><div class="ticker-item">Node.js <span>✦</span></div><div class="ticker-item">WordPress <span>✦</span></div><div class="ticker-item">Webflow <span>✦</span></div><div class="ticker-item">Shopify <span>✦</span></div><div class="ticker-item">PostgreSQL <span>✦</span></div><div class="ticker-item">MongoDB <span>✦</span></div><div class="ticker-item">REST API <span>✦</span></div><div class="ticker-item">TypeScript <span>✦</span></div><div class="ticker-item">Docker <span>✦</span></div><div class="ticker-item">Figma <span>✦</span></div><div class="ticker-item">Tailwind CSS <span>✦</span></div><div class="ticker-item">AWS <span>✦</span></div>
+    <div class="ticker-item">React.js <span>✦</span></div><div class="ticker-item">Next.js <span>✦</span></div><div class="ticker-item">Node.js <span>✦</span></div><div class="ticker-item">WordPress <span>✦</span></div><div class="ticker-item">Webflow <span>✦</span></div><div class="ticker-item">Shopify <span>✦</span></div><div class="ticker-item">PostgreSQL <span>✦</span></div><div class="ticker-item">MongoDB <span>✦</span></div><div class="ticker-item">REST API <span>✦</span></div><div class="ticker-item">TypeScript <span>✦</span></div><div class="ticker-item">Docker <span>✦</span></div><div class="ticker-item">Figma <span>✦</span></div><div class="ticker-item">Tailwind CSS <span>✦</span></div><div class="ticker-item">AWS <span>✦</span></div>
+  </div>
+</div>
+
+<!-- PROJECTS -->
+<section id="projects" class="projects-section section-pad">
+<div class="container">
+  <div class="sec-label fi">Selected Work</div>
+  <h2 class="sec-h2 fi">Projects I've <em>Built</em></h2>
+  <p class="sec-sub fi">Real client websites across industries — click any card to visit the live site.</p>
+  <div class="proj-grid stagger">
+    <a href="https://maxicon.pk" target="_blank" class="proj-card"><div class="proj-num">01</div><div class="proj-title">Maxicon Solutions</div><div class="proj-url">maxicon.pk</div><div class="proj-desc">Complete IT company website — service pages, Trustpilot integration, portfolio showcase, lead generation forms.</div><div class="proj-footer"><div class="proj-tags"><span class="ptag wp">WordPress</span><span class="ptag fe">Elementor</span><span class="ptag fe">PHP</span></div><div class="proj-arrow">→</div></div></a>
+    <a href="https://solutionsartemis.com" target="_blank" class="proj-card"><div class="proj-num">02</div><div class="proj-title">Solutions Artemis</div><div class="proj-url">solutionsartemis.com</div><div class="proj-desc">Multi-service business website with team section, service pages, and high-conversion contact funnel.</div><div class="proj-footer"><div class="proj-tags"><span class="ptag wp">WordPress</span><span class="ptag fe">Custom CSS</span><span class="ptag fe">JS</span></div><div class="proj-arrow">→</div></div></a>
+    <a href="https://shoppingpunch.com" target="_blank" class="proj-card"><div class="proj-num">03</div><div class="proj-title">Shopping Punch</div><div class="proj-url">shoppingpunch.com</div><div class="proj-desc">Full e-commerce platform — product catalog, cart, Stripe + PayPal payments, mobile-first design.</div><div class="proj-footer"><div class="proj-tags"><span class="ptag wp">WooCommerce</span><span class="ptag be">PHP</span><span class="ptag be">MySQL</span></div><div class="proj-arrow">→</div></div></a>
+    <a href="https://www.vlot.ch" target="_blank" class="proj-card"><div class="proj-num">04</div><div class="proj-title">Vlot — Swiss Fintech</div><div class="proj-url">vlot.ch</div><div class="proj-desc">B2B SaaS for financial wellbeing — 4-language site, client portal, Outlook Calendar demo booking.</div><div class="proj-footer"><div class="proj-tags"><span class="ptag fe">React</span><span class="ptag be">Node.js</span><span class="ptag fe">i18n</span></div><div class="proj-arrow">→</div></div></a>
+    <a href="https://www.superpower.social" target="_blank" class="proj-card"><div class="proj-num">05</div><div class="proj-title">Superpower Social</div><div class="proj-url">superpower.social</div><div class="proj-desc">AI comment moderation SaaS — pricing tiers, live demo section, Stripe free trial capture.</div><div class="proj-footer"><div class="proj-tags"><span class="ptag wf">Webflow</span><span class="ptag fe">GSAP</span><span class="ptag be">Stripe</span></div><div class="proj-arrow">→</div></div></a>
+    <a href="https://pliadez.io" target="_blank" class="proj-card"><div class="proj-num">06</div><div class="proj-title">Pliadez — Tech VC</div><div class="proj-url">pliadez.io</div><div class="proj-desc">Venture capital site — dark editorial design, fund application portal, investor relations.</div><div class="proj-footer"><div class="proj-tags"><span class="ptag wp">WordPress</span><span class="ptag fe">Dark Theme</span><span class="ptag fe">GSAP</span></div><div class="proj-arrow">→</div></div></a>
+    <a href="https://kerberos.ae" target="_blank" class="proj-card"><div class="proj-num">07</div><div class="proj-title">Kerberos UAE</div><div class="proj-url">kerberos.ae</div><div class="proj-desc">Dubai management consulting — enterprise service pages, team bios, career application portal.</div><div class="proj-footer"><div class="proj-tags"><span class="ptag wp">Elementor</span><span class="ptag fe">GSAP</span><span class="ptag fe">SEO</span></div><div class="proj-arrow">→</div></div></a>
+   
+    <a href="https://softpouch.com" target="_blank" class="proj-card"><div class="proj-num">08</div><div class="proj-title">Softpouch</div><div class="proj-url">softpouch.com</div><div class="proj-desc">Product e-commerce — custom packaging customizer, B2B wholesale inquiry flow, order management.</div><div class="proj-footer"><div class="proj-tags"><span class="ptag wp">WooCommerce</span><span class="ptag be">PHP</span><span class="ptag be">Custom Dev</span></div><div class="proj-arrow">→</div></div></a>
+    <a href="https://hinders.co.uk" target="_blank" class="proj-card"><div class="proj-num">09</div><div class="proj-title">Hinders UK</div><div class="proj-url">hinders.co.uk</div><div class="proj-desc">UK business website — service catalogue, case studies, regional SEO for local lead generation.</div><div class="proj-footer"><div class="proj-tags"><span class="ptag wp">WordPress</span><span class="ptag fe">SEO</span><span class="ptag fe">Schema</span></div><div class="proj-arrow">→</div></div></a>
+    <a href="https://sam-crest.com" target="_blank" class="proj-card"><div class="proj-num">10</div><div class="proj-title">Sam-Crest</div><div class="proj-url">sam-crest.com</div><div class="proj-desc">Corporate site — animated hero, service breakdowns, testimonial carousel, HubSpot CRM integration.</div><div class="proj-footer"><div class="proj-tags"><span class="ptag wp">WordPress</span><span class="ptag be">HubSpot</span><span class="ptag fe">Animations</span></div><div class="proj-arrow">→</div></div></a>
+    <a href="https://bitco-international.ae" target="_blank" class="proj-card"><div class="proj-num">11</div><div class="proj-title">Bitco International</div><div class="proj-url">bitco-international.ae</div><div class="proj-desc">UAE trading company — product gallery, international shipping info, inquiry management system.</div><div class="proj-footer"><div class="proj-tags"><span class="ptag wp">WordPress</span><span class="ptag fe">Custom JS</span><span class="ptag fe">CSS</span></div><div class="proj-arrow">→</div></div></a>
+  </div>
+</div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══ CASE STUDIES ══ -->
+<section id="casestudy" class="case-section section-pad">
+<div class="container">
+  <div class="sec-label fi">Deep Dive</div>
+  <h2 class="sec-h2 fi">Case <em>Studies</em></h2>
+  
+
+   <!-- ── CASE 1 SUPERPOWER ── -->
+       <div class="case-card fi">
+    <div class="case-top">
+      <div class="case-top-left">
+        <div class="case-num">01</div>
+        <div>
+          <div class="case-industry">🛍️ E-Commerce</div>
+          <div class="case-title">Contact Page — Broken Form & Confusing UX</div>
+        </div>
+      </div>
+      <div class="case-chips">
+        <span class="chip red">❌ Error States</span>
+        <span class="chip blue">WordPress</span>
+        <span class="chip blue">WooCommerce</span>
+        <span class="chip green">✅ Fixed</span>
+      </div>
+    </div>
+
+    <div class="ba-split">
+      <!-- BEFORE -->
+      <div class="ba-col">
+        <div class="ba-col-head bef">❌ Before — Broken Contact Page</div>
+        <div class="screen-wrap">
+          <svg viewBox="0 0 440 380" xmlns="http://www.w3.org/2000/svg">
+            <!-- Browser chrome -->
+            <rect width="440" height="380" fill="#0a0c14"/>
+            <rect width="440" height="34" fill="#111520"/>
+            <circle cx="14" cy="17" r="5" fill="#ff5f57"/><circle cx="28" cy="17" r="5" fill="#febc2e"/><circle cx="42" cy="17" r="5" fill="#28c840"/>
+            <rect x="60" y="10" width="220" height="14" rx="4" fill="#1a1f30"/>
+            <text x="170" y="21" font-size="7" fill="#f87171" font-family="monospace">⚠ Error — Contact Us</text>
+
+            <!-- PAGE BG -->
+            <rect y="34" width="440" height="346" fill="#1a1f2e"/>
+
+            <!-- Messy nav -->
+            <rect y="34" width="440" height="36" fill="#111520"/>
+            <rect x="10" y="44" width="60" height="12" rx="2" fill="#2a2f45"/>
+            <rect x="90" y="46" width="30" height="8" rx="2" fill="#1e2338"/>
+            <rect x="130" y="46" width="30" height="8" rx="2" fill="#1e2338"/>
+            <rect x="170" y="46" width="30" height="8" rx="2" fill="#1e2338"/>
+            <!-- small red warning in nav -->
+            <rect x="380" y="42" width="50" height="18" rx="4" fill="#7f1d1d"/>
+            <text x="405" y="54" font-size="7" fill="#fca5a5" text-anchor="middle">ERROR</text>
+
+            <!-- ERROR BANNER at top -->
+            <rect x="10" y="78" width="420" height="32" rx="6" fill="#450a0a" stroke="#ef4444" stroke-width="1.5"/>
+            <text x="22" y="90" font-size="8" fill="#f87171" font-weight="bold">⚠ Something went wrong!</text>
+            <text x="22" y="102" font-size="7" fill="#fca5a5">Your message could not be sent. Please try again. (Error 500)</text>
+
+            <!-- Heading -->
+            <text x="22" y="130" font-size="13" fill="#e8edf5" font-weight="bold">Contact Us</text>
+            <text x="22" y="145" font-size="7" fill="#5a6080">Fill the form below — we'll get back within 24hrs</text>
+
+            <!-- FORM — broken and confusing -->
+            <rect x="10" y="155" width="280" height="180" rx="8" fill="#0f1220" stroke="#2a3050" stroke-width="1"/>
+
+            <!-- Name field — normal -->
+            <text x="20" y="173" font-size="7" fill="#7a8aaa">Full Name</text>
+            <rect x="20" y="177" width="260" height="22" rx="4" fill="#1a1f30" stroke="#2a3050" stroke-width="1"/>
+            <text x="28" y="192" font-size="7" fill="#e8edf5">Muhammad Ahmed</text>
+
+            <!-- Email — red error -->
+            <text x="20" y="212" font-size="7" fill="#f87171">Email Address *</text>
+            <rect x="20" y="216" width="260" height="22" rx="4" fill="#1a0a0a" stroke="#ef4444" stroke-width="1.5"/>
+            <text x="28" y="231" font-size="7" fill="#f87171">ahmed@gmail</text>
+            <text x="20" y="245" font-size="6.5" fill="#f87171">❌ Invalid email format</text>
+
+            <!-- Phone — confusing label -->
+            <text x="20" y="260" font-size="7" fill="#7a8aaa">Phone (optional? required?)</text>
+            <rect x="20" y="264" width="260" height="22" rx="4" fill="#1a1f30" stroke="#2a3050" stroke-width="1"/>
+            <text x="28" y="279" font-size="7" fill="#3a4560">Enter phone number here...</text>
+
+            <!-- Message field -->
+            <text x="20" y="298" font-size="7" fill="#7a8aaa">Message</text>
+            <rect x="20" y="302" width="260" height="28" rx="4" fill="#1a1f30" stroke="#2a3050" stroke-width="1"/>
+
+            <!-- Submit btn — grey/disabled looking -->
+            <rect x="20" y="335" width="100" height="24" rx="5" fill="#2a2f45"/>
+            <text x="70" y="350" font-size="8" fill="#5a6080" text-anchor="middle">Send Message</text>
+            <text x="135" y="348" font-size="6" fill="#f87171">← Why is this greyed out?</text>
+
+            <!-- Confusing side panel -->
+            <rect x="300" y="155" width="130" height="180" rx="8" fill="#0f1220" stroke="#2a3050" stroke-width="1"/>
+            <text x="310" y="174" font-size="8" fill="#e8edf5" font-weight="bold">Contact Info</text>
+            <text x="310" y="190" font-size="6.5" fill="#5a6080">📍 Address: ???</text>
+            <text x="310" y="206" font-size="6.5" fill="#5a6080">📞 +92-XXX-XXXXXXX</text>
+            <text x="310" y="222" font-size="6.5" fill="#5a6080">✉️ info@store.com</text>
+            <text x="310" y="240" font-size="6" fill="#f87171">* Office hours unknown</text>
+            <!-- Duplicate form warning -->
+            <rect x="305" y="255" width="120" height="50" rx="4" fill="#450a0a" stroke="#ef4444" stroke-width="1"/>
+            <text x="365" y="270" font-size="6.5" fill="#f87171" text-anchor="middle">⚠ CAPTCHA</text>
+            <text x="365" y="283" font-size="6" fill="#fca5a5" text-anchor="middle">Verify you're</text>
+            <text x="365" y="295" font-size="6" fill="#fca5a5" text-anchor="middle">human (again?)</text>
+
+            <!-- User frustration indicator -->
+            <rect x="10" y="342" width="420" height="28" rx="0" fill="#0f1220"/>
+            <text x="22" y="352" font-size="7" fill="#f87171">😤 Users are leaving the page — 78% abandon rate on this form</text>
+            <text x="22" y="364" font-size="6.5" fill="#5a6080">3 duplicate captchas · unclear required fields · broken submit · no confirmation</text>
+          </svg>
+        </div>
+      </div>
+
+      <!-- AFTER -->
+      <div class="ba-col">
+        <div class="ba-col-head aft">✦ After — Clean Contact Experience</div>
+        <div class="screen-wrap">
+          <svg viewBox="0 0 440 380" xmlns="http://www.w3.org/2000/svg">
+            <rect width="440" height="380" fill="#07090f"/>
+            <rect width="440" height="34" fill="#0a0c14"/>
+            <circle cx="14" cy="17" r="5" fill="#ff5f57"/><circle cx="28" cy="17" r="5" fill="#febc2e"/><circle cx="42" cy="17" r="5" fill="#28c840"/>
+            <rect x="60" y="10" width="220" height="14" rx="4" fill="#1a1f30"/>
+            <text x="170" y="21" font-size="7" fill="#34d399" font-family="monospace">✓ store.com/contact</text>
+
+            <!-- Nav clean -->
+            <rect y="34" width="440" height="34" fill="#0c0f1a"/>
+            <rect x="10" y="42" width="55" height="14" rx="3" fill="#1a2550"/>
+            <text x="37" y="52" font-size="7" fill="#60a5fa" text-anchor="middle" font-weight="bold">STORE</text>
+            <rect x="300" y="42" width="60" height="14" rx="7" fill="#3b82f6"/>
+            <text x="330" y="52" font-size="6.5" fill="#fff" text-anchor="middle" font-weight="bold">Shop Now</text>
+
+            <!-- SUCCESS banner -->
+            <rect x="10" y="76" width="420" height="28" rx="6" fill="#052e16" stroke="#10b981" stroke-width="1.5"/>
+            <text x="22" y="88" font-size="8" fill="#34d399" font-weight="bold">✓ Message sent! We'll reply within 2 hours.</text>
+            <text x="22" y="99" font-size="6.5" fill="#6ee7b7">Check your inbox — a confirmation email was sent to you.</text>
+
+            <!-- Heading -->
+            <text x="22" y="124" font-size="13" fill="#e8edf5" font-weight="bold">Get In Touch</text>
+            <text x="22" y="138" font-size="7" fill="#7a8aaa">We're here to help — fill out the form and we'll respond fast 🚀</text>
+
+            <!-- CLEAN FORM -->
+            <rect x="10" y="148" width="260" height="202" rx="10" fill="#0c0f1a" stroke="#1e2d50" stroke-width="1"/>
+
+            <!-- Name — clean with checkmark -->
+            <text x="20" y="166" font-size="7" fill="#7a8aaa">Full Name <tspan fill="#f87171">*</tspan></text>
+            <rect x="20" y="170" width="240" height="22" rx="5" fill="#111827" stroke="#1e40af" stroke-width="1"/>
+            <text x="28" y="185" font-size="7" fill="#e8edf5">Muhammad Ahmed</text>
+            <text x="250" y="185" font-size="9" fill="#34d399">✓</text>
+
+            <!-- Email — clean -->
+            <text x="20" y="204" font-size="7" fill="#7a8aaa">Email Address <tspan fill="#f87171">*</tspan></text>
+            <rect x="20" y="208" width="240" height="22" rx="5" fill="#111827" stroke="#1e40af" stroke-width="1"/>
+            <text x="28" y="223" font-size="7" fill="#e8edf5">ahmed@gmail.com</text>
+            <text x="250" y="223" font-size="9" fill="#34d399">✓</text>
+
+            <!-- Subject dropdown -->
+            <text x="20" y="243" font-size="7" fill="#7a8aaa">Subject</text>
+            <rect x="20" y="247" width="240" height="22" rx="5" fill="#111827" stroke="#1e40af" stroke-width="1"/>
+            <text x="28" y="262" font-size="7" fill="#e8edf5">Order Issue / Complaint</text>
+            <text x="248" y="261" font-size="8" fill="#7a8aaa">▾</text>
+
+            <!-- Message -->
+            <text x="20" y="282" font-size="7" fill="#7a8aaa">Your Message</text>
+            <rect x="20" y="286" width="240" height="34" rx="5" fill="#111827" stroke="#1e40af" stroke-width="1"/>
+            <text x="28" y="300" font-size="6.5" fill="#e8edf5">I have a question about my recent order...</text>
+
+            <!-- Submit — glowing blue -->
+            <rect x="20" y="326" width="240" height="20" rx="10" fill="#2563eb"/>
+            <text x="140" y="339" font-size="7.5" fill="#fff" text-anchor="middle" font-weight="bold">Send Message →</text>
+
+            <!-- Side info — clean -->
+            <rect x="282" y="148" width="148" height="202" rx="10" fill="#0c0f1a" stroke="#1e2d50" stroke-width="1"/>
+            <text x="292" y="167" font-size="8.5" fill="#e8edf5" font-weight="bold">Quick Support</text>
+
+            <rect x="292" y="176" width="128" height="34" rx="6" fill="#0f172a" stroke="#1e2d50" stroke-width="1"/>
+            <text x="302" y="188" font-size="7" fill="#60a5fa">📧 Email Support</text>
+            <text x="302" y="201" font-size="6" fill="#7a8aaa">Reply in &lt; 2 hours</text>
+
+            <rect x="292" y="216" width="128" height="34" rx="6" fill="#0f172a" stroke="#1e2d50" stroke-width="1"/>
+            <text x="302" y="228" font-size="7" fill="#34d399">💬 Live Chat</text>
+            <text x="302" y="241" font-size="6" fill="#7a8aaa">Mon–Sat 9am–9pm</text>
+
+            <rect x="292" y="256" width="128" height="34" rx="6" fill="#0f172a" stroke="#1e2d50" stroke-width="1"/>
+            <text x="302" y="268" font-size="7" fill="#fbbf24">📞 WhatsApp</text>
+            <text x="302" y="281" font-size="6" fill="#7a8aaa">+92 300 0000000</text>
+
+            <!-- FAQ hint -->
+            <rect x="292" y="298" width="128" height="42" rx="6" fill="#052e16" stroke="#10b981" stroke-width="1"/>
+            <text x="356" y="315" font-size="7" fill="#34d399" text-anchor="middle" font-weight="bold">✓ 4.9★ Support Rating</text>
+            <text x="356" y="328" font-size="6" fill="#6ee7b7" text-anchor="middle">98% issues resolved</text>
+            <text x="356" y="340" font-size="6" fill="#6ee7b7" text-anchor="middle">in first response</text>
+
+            <!-- User happy indicator -->
+            <rect x="10" y="356" width="420" height="20" rx="0" fill="#0c0f1a"/>
+            <text x="22" y="369" font-size="7" fill="#34d399">✅ Conversion up 340% · Error rate 0% · Avg response 1.8 hrs</text>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- CHALLENGE / SOLUTION -->
+    <div class="case-bottom">
+      <div class="cs-box chal">
+        <div class="cs-box-hd">🔴 Challenge</div>
+        <p>The e-commerce store's contact page had a broken form showing Error 500 on submission, unclear required fields, duplicate CAPTCHA checks, and no confirmation message. Customers had no idea if their message was sent. The result: 78% form abandonment rate, negative reviews about support, and a huge drop in customer trust.</p>
+      </div>
+      <div class="cs-box sol">
+        <div class="cs-box-hd">🔵 Solution</div>
+        <p>Rebuilt the contact page from scratch — fixed all backend form errors, added real-time inline validation, clear required field markers, a subject dropdown for routing, instant success confirmation with email receipt, and a side panel with Live Chat & WhatsApp options. Customers can now reach support in seconds, with full clarity on what to expect.</p>
+      </div>
+    </div>
+    <div class="results">
+      <div class="res-item"><div class="res-num">-78%</div><div class="res-lbl">Form Abandonment</div></div>
+      <div class="res-item"><div class="res-num">340%</div><div class="res-lbl">More Submissions</div></div>
+      <div class="res-item"><div class="res-num">4.9★</div><div class="res-lbl">Support Rating</div></div>
+    </div>
+  </div>
+
+    <!-- ── CASE 2: SUPERPOWER ── -->
+    <div class="case-card">
+     <div class="case-card fi">
+    <div class="case-top">
+      <div class="case-top-left">
+        <div class="case-num">02</div>
+        <div>
+          <div class="case-industry">🏥 Healthcare</div>portfilio you are beagtde aaa.
+          <div class="case-title">Hospital Appointment — Long Queues to Online Booking</div>
+        </div>
+      </div>
+      <div class="case-chips">
+        <span class="chip red">❌ Long Queues</span>
+        <span class="chip blue">React</span>
+        <span class="chip blue">Node.js</span>
+        <span class="chip blue">PostgreSQL</span>
+        <span class="chip green">✅ Online Booking</span>
+      </div>
+    </div>
+
+    <div class="ba-split">
+      <!-- BEFORE -->
+      <div class="ba-col">
+        <div class="ba-col-head bef">❌ Before — Physical Queue Only</div>
+        <div class="screen-wrap">
+          <svg viewBox="0 0 440 380" xmlns="http://www.w3.org/2000/svg">
+            <rect width="440" height="380" fill="#0a0c14"/>
+            <rect width="440" height="34" fill="#111520"/>
+            <circle cx="14" cy="17" r="5" fill="#ff5f57"/><circle cx="28" cy="17" r="5" fill="#febc2e"/><circle cx="42" cy="17" r="5" fill="#28c840"/>
+            <rect x="60" y="10" width="220" height="14" rx="4" fill="#1a1f30"/>
+            <text x="170" y="21" font-size="7" fill="#5a6080" font-family="monospace">hospital.com (no booking system)</text>
+
+            <!-- Hospital scene illustration -->
+            <rect y="34" width="440" height="346" fill="#0f1220"/>
+
+            <!-- Building exterior -->
+            <rect x="140" y="50" width="160" height="110" rx="4" fill="#1a2030" stroke="#2a3050" stroke-width="1.5"/>
+            <rect x="165" y="50" width="110" height="16" rx="2" fill="#243050"/>
+            <text x="220" y="62" font-size="9" fill="#60a5fa" text-anchor="middle" font-weight="bold">🏥 CITY HOSPITAL</text>
+            <!-- windows -->
+            <rect x="155" y="74" width="20" height="16" rx="2" fill="#1e3050"/><rect x="185" y="74" width="20" height="16" rx="2" fill="#1e3050"/><rect x="215" y="74" width="20" height="16" rx="2" fill="#1e3050"/><rect x="245" y="74" width="20" height="16" rx="2" fill="#1e3050"/>
+            <rect x="155" y="98" width="20" height="16" rx="2" fill="#1e3050"/><rect x="185" y="98" width="20" height="16" rx="2" fill="#1e3050"/><rect x="215" y="98" width="20" height="16" rx="2" fill="#1e3050"/><rect x="245" y="98" width="20" height="16" rx="2" fill="#1e3050"/>
+            <!-- door -->
+            <rect x="200" y="126" width="40" height="34" rx="3" fill="#243050"/>
+            <text x="220" y="147" font-size="7" fill="#3a4560" text-anchor="middle">ENTRANCE</text>
+
+            <!-- LONG QUEUE of people -->
+            <text x="22" y="185" font-size="8" fill="#f87171" font-weight="bold">😰 Long Queue — People Waiting for Token Numbers</text>
+
+            <!-- People icons in queue -->
+            <!-- Person 1 (at counter) -->
+            <circle cx="140" cy="220" r="9" fill="#1e3050" stroke="#3b82f6" stroke-width="1.5"/>
+            <text x="140" y="224" font-size="8" fill="#60a5fa" text-anchor="middle">👤</text>
+            <text x="140" y="238" font-size="6" fill="#34d399" text-anchor="middle">NOW</text>
+
+            <!-- Queue line -->
+            <line x1="155" y1="220" x2="400" y2="220" stroke="#2a3050" stroke-width="1" stroke-dasharray="4,3"/>
+
+            <!-- People waiting -->
+            <circle cx="175" cy="220" r="8" fill="#1a1f30" stroke="#2a3050" stroke-width="1"/>
+            <text x="175" y="224" font-size="7" fill="#7a8aaa" text-anchor="middle">👤</text>
+            <circle cx="200" cy="220" r="8" fill="#1a1f30" stroke="#2a3050" stroke-width="1"/>
+            <text x="200" y="224" font-size="7" fill="#7a8aaa" text-anchor="middle">👤</text>
+            <circle cx="225" cy="220" r="8" fill="#1a1f30" stroke="#2a3050" stroke-width="1"/>
+            <text x="225" y="224" font-size="7" fill="#7a8aaa" text-anchor="middle">👤</text>
+            <circle cx="250" cy="220" r="8" fill="#1a1f30" stroke="#2a3050" stroke-width="1"/>
+            <text x="250" y="224" font-size="7" fill="#7a8aaa" text-anchor="middle">👤</text>
+            <circle cx="275" cy="220" r="8" fill="#1a1f30" stroke="#2a3050" stroke-width="1"/>
+            <text x="275" y="224" font-size="7" fill="#7a8aaa" text-anchor="middle">👤</text>
+            <circle cx="300" cy="220" r="8" fill="#1a1f30" stroke="#2a3050" stroke-width="1"/>
+            <text x="300" y="224" font-size="7" fill="#7a8aaa" text-anchor="middle">👤</text>
+            <circle cx="325" cy="220" r="8" fill="#1a1f30" stroke="#2a3050" stroke-width="1"/>
+            <text x="325" y="224" font-size="7" fill="#7a8aaa" text-anchor="middle">👤</text>
+            <circle cx="350" cy="220" r="8" fill="#1a1f30" stroke="#2a3050" stroke-width="1"/>
+            <text x="350" y="224" font-size="7" fill="#7a8aaa" text-anchor="middle">👤</text>
+            <text x="375" y="224" font-size="10" fill="#5a6080" text-anchor="middle">•••</text>
+
+            <!-- Wait time bubble -->
+            <rect x="280" y="196" width="120" height="20" rx="6" fill="#450a0a" stroke="#ef4444" stroke-width="1"/>
+            <text x="340" y="209" font-size="7" fill="#f87171" text-anchor="middle">⏱ Avg wait: 3–4 hours</text>
+
+            <!-- Token counter (old) -->
+            <rect x="22" y="248" width="120" height="66" rx="6" fill="#1a1f30" stroke="#2a3050" stroke-width="1"/>
+            <text x="82" y="263" font-size="7" fill="#7a8aaa" text-anchor="middle">TOKEN COUNTER</text>
+            <rect x="32" y="268" width="100" height="26" rx="4" fill="#0f1220"/>
+            <text x="82" y="282" font-size="16" fill="#f87171" text-anchor="middle" font-weight="bold">247</text>
+            <text x="82" y="294" font-size="6" fill="#5a6080" text-anchor="middle">Current number serving: 108</text>
+            <text x="82" y="307" font-size="6" fill="#f87171" text-anchor="middle">139 people ahead of you</text>
+
+            <!-- Problems list -->
+            <rect x="160" y="248" width="270" height="66" rx="6" fill="#1a0a0a" stroke="#7f1d1d" stroke-width="1"/>
+            <text x="172" y="264" font-size="7" fill="#f87171" font-weight="bold">⚠ Problems Patients Face:</text>
+            <text x="172" y="278" font-size="6.5" fill="#fca5a5">❌ Must visit hospital just to get a token number</text>
+            <text x="172" y="291" font-size="6.5" fill="#fca5a5">❌ No way to know doctor availability in advance</text>
+            <text x="172" y="304" font-size="6.5" fill="#fca5a5">❌ Sick patients standing for hours in queue</text>
+            <text x="172" y="317" font-size="6.5" fill="#fca5a5">❌ No online booking system exists</text>
+
+            <!-- Footer stat -->
+            <rect x="22" y="326" width="396" height="42" rx="6" fill="#0f1220"/>
+            <text x="34" y="340" font-size="7" fill="#f87171" font-weight="bold">Real Patient Feedback:</text>
+            <text x="34" y="353" font-size="6.5" fill="#7a8aaa">"I drove 45 min, stood 3 hrs, then doctor was not available that day." — Frustrated patient</text>
+            <text x="34" y="364" font-size="6.5" fill="#5a6080">Average patient satisfaction: 2.1/5 ⭐</text>
+          </svg>
+        </div>
+      </div>
+
+      <!-- AFTER -->
+      <div class="ba-col">
+        <div class="ba-col-head aft">✦ After — Online Appointment System</div>
+        <div class="screen-wrap">
+          <svg viewBox="0 0 440 380" xmlns="http://www.w3.org/2000/svg">
+            <rect width="440" height="380" fill="#07090f"/>
+            <rect width="440" height="34" fill="#0a0c14"/>
+            <circle cx="14" cy="17" r="5" fill="#ff5f57"/><circle cx="28" cy="17" r="5" fill="#febc2e"/><circle cx="42" cy="17" r="5" fill="#28c840"/>
+            <rect x="60" y="10" width="220" height="14" rx="4" fill="#1a1f30"/>
+            <text x="170" y="21" font-size="7" fill="#34d399" font-family="monospace">✓ hospital.com/book-appointment</text>
+
+            <!-- Page BG -->
+            <rect y="34" width="440" height="346" fill="#07090f"/>
+
+            <!-- Nav -->
+            <rect y="34" width="440" height="34" fill="#0c0f1a"/>
+            <text x="20" y="55" font-size="9" fill="#60a5fa" font-weight="bold">🏥 CityHospital</text>
+            <rect x="330" y="41" width="95" height="18" rx="9" fill="#2563eb"/>
+            <text x="377" y="53" font-size="7" fill="#fff" text-anchor="middle" font-weight="bold">Book Appointment</text>
+
+            <!-- HERO Banner -->
+            <rect x="10" y="76" width="420" height="38" rx="8" fill="#052e16" stroke="#10b981" stroke-width="1.5"/>
+            <text x="22" y="91" font-size="9" fill="#34d399" font-weight="bold">🏥 Book Your Appointment Online — No Queue!</text>
+            <text x="22" y="107" font-size="7" fill="#6ee7b7">Choose your doctor, pick a time slot, and get confirmation instantly — from home 🏠</text>
+
+            <!-- BOOKING FORM -->
+            <rect x="10" y="122" width="260" height="238" rx="10" fill="#0c0f1a" stroke="#1e2d50" stroke-width="1"/>
+
+            <!-- Step indicator -->
+            <text x="20" y="140" font-size="7" fill="#60a5fa" font-weight="bold">Step 1 of 3 — Choose Doctor</text>
+            <rect x="20" y="144" width="240" height="4" rx="2" fill="#1e2d50"/>
+            <rect x="20" y="144" width="80" height="4" rx="2" fill="#3b82f6"/>
+
+            <!-- Doctor selection -->
+            <text x="20" y="163" font-size="7" fill="#7a8aaa">Select Department</text>
+            <rect x="20" y="167" width="240" height="22" rx="5" fill="#111827" stroke="#1e40af" stroke-width="1"/>
+            <text x="28" y="182" font-size="7" fill="#e8edf5">🫀 Cardiology</text>
+            <text x="248" y="181" font-size="8" fill="#7a8aaa">▾</text>
+
+            <text x="20" y="202" font-size="7" fill="#7a8aaa">Available Doctors</text>
+            <!-- Doctor cards -->
+            <rect x="20" y="206" width="115" height="40" rx="6" fill="#111827" stroke="#1e40af" stroke-width="1.5"/>
+            <text x="78" y="221" font-size="7" fill="#60a5fa" text-anchor="middle">Dr. Sarah Khan</text>
+            <text x="78" y="232" font-size="6" fill="#7a8aaa" text-anchor="middle">Cardiologist</text>
+            <text x="78" y="242" font-size="6" fill="#34d399" text-anchor="middle">✓ Available Today</text>
+
+            <rect x="144" y="206" width="116" height="40" rx="6" fill="#0f1220" stroke="#2a3050" stroke-width="1"/>
+            <text x="202" y="221" font-size="7" fill="#e8edf5" text-anchor="middle">Dr. Ali Hassan</text>
+            <text x="202" y="232" font-size="6" fill="#7a8aaa" text-anchor="middle">Cardiologist</text>
+            <text x="202" y="242" font-size="6" fill="#fbbf24" text-anchor="middle">Next slot: Tomorrow</text>
+
+            <!-- Time slot picker -->
+            <text x="20" y="262" font-size="7" fill="#7a8aaa">Select Time Slot — Dr. Sarah Khan</text>
+            <rect x="20" y="267" width="52" height="20" rx="4" fill="#1e40af" stroke="#3b82f6" stroke-width="1.5"/>
+            <text x="46" y="280" font-size="6.5" fill="#fff" text-anchor="middle">9:00 AM ✓</text>
+            <rect x="78" y="267" width="52" height="20" rx="4" fill="#0f1220" stroke="#2a3050" stroke-width="1"/>
+            <text x="104" y="280" font-size="6.5" fill="#7a8aaa" text-anchor="middle">10:00 AM</text>
+            <rect x="136" y="267" width="52" height="20" rx="4" fill="#0f1220" stroke="#2a3050" stroke-width="1"/>
+            <text x="162" y="280" font-size="6.5" fill="#7a8aaa" text-anchor="middle">11:00 AM</text>
+            <rect x="194" y="267" width="66" height="20" rx="4" fill="#1a0a0a" stroke="#7f1d1d" stroke-width="1"/>
+            <text x="227" y="280" font-size="6" fill="#f87171" text-anchor="middle">2:00 PM ✗ Full</text>
+
+            <!-- Patient info -->
+            <text x="20" y="302" font-size="7" fill="#7a8aaa">Patient Name</text>
+            <rect x="20" y="306" width="240" height="20" rx="5" fill="#111827" stroke="#1e40af" stroke-width="1"/>
+            <text x="28" y="319" font-size="7" fill="#e8edf5">Ahmed Raza</text>
+            <text x="248" y="319" font-size="9" fill="#34d399">✓</text>
+
+            <!-- Book btn -->
+            <rect x="20" y="333" width="240" height="22" rx="11" fill="#2563eb"/>
+            <text x="140" y="347" font-size="7.5" fill="#fff" text-anchor="middle" font-weight="bold">✓ Confirm Appointment</text>
+
+            <!-- CONFIRMATION CARD -->
+            <rect x="280" y="122" width="150" height="238" rx="10" fill="#0c0f1a" stroke="#1e2d50" stroke-width="1"/>
+            <text x="355" y="142" font-size="8" fill="#e8edf5" text-anchor="middle" font-weight="bold">Your Booking</text>
+
+            <!-- Confirmed appointment -->
+            <rect x="290" y="150" width="130" height="88" rx="8" fill="#052e16" stroke="#10b981" stroke-width="1.5"/>
+            <text x="355" y="167" font-size="7" fill="#34d399" text-anchor="middle" font-weight="bold">✅ CONFIRMED</text>
+            <text x="355" y="182" font-size="6.5" fill="#6ee7b7" text-anchor="middle">Dr. Sarah Khan</text>
+            <text x="355" y="194" font-size="6.5" fill="#6ee7b7" text-anchor="middle">Cardiology</text>
+            <text x="355" y="207" font-size="7" fill="#34d399" text-anchor="middle" font-weight="bold">Today, 9:00 AM</text>
+            <text x="355" y="219" font-size="6.5" fill="#6ee7b7" text-anchor="middle">Room 204, 2nd Floor</text>
+            <text x="355" y="231" font-size="6" fill="#a7f3d0" text-anchor="middle">Token: #A-007</text>
+
+            <!-- SMS confirmation -->
+            <rect x="290" y="246" width="130" height="50" rx="6" fill="#0f172a" stroke="#1e2d50" stroke-width="1"/>
+            <text x="355" y="261" font-size="6.5" fill="#60a5fa" text-anchor="middle">📱 SMS Sent!</text>
+            <text x="355" y="274" font-size="6" fill="#7a8aaa" text-anchor="middle">Confirmation sent to</text>
+            <text x="355" y="285" font-size="6" fill="#7a8aaa" text-anchor="middle">+92 300 XXXXXXX</text>
+
+            <!-- Stats -->
+            <rect x="290" y="302" width="130" height="50" rx="6" fill="#0c0f1a" stroke="#1e2d50" stroke-width="1"/>
+            <text x="355" y="317" font-size="6.5" fill="#fbbf24" text-anchor="middle">⏱ Zero Wait Time</text>
+            <text x="355" y="329" font-size="6" fill="#7a8aaa" text-anchor="middle">No queue • From home</text>
+            <text x="355" y="341" font-size="6" fill="#34d399" text-anchor="middle">4.9★ Patient Rating</text>
+
+            <!-- footer -->
+            <rect x="10" y="366" width="420" height="14" rx="0" fill="#0c0f1a"/>
+            <text x="22" y="376" font-size="6.5" fill="#34d399">✅ Patient booked from home · No queue · Confirmed in 30 seconds</text>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <div class="case-bottom">
+      <div class="cs-box chal">
+        <div class="cs-box-hd">🔴 Challenge</div>
+        <p>The hospital had no online presence for appointments. Patients — including elderly and sick individuals — had to physically visit the hospital just to get a token number, then stand in queues of 100+ people for 3 to 4 hours. Doctor availability was unknown until arrival. Patient satisfaction was 2.1/5 and complaints were rising daily.</p>
+      </div>
+      <div class="cs-box sol">
+        <div class="cs-box-hd">🔵 Solution</div>
+        <p>I built a complete online appointment system — patients can now sit at home, choose their department and doctor, see real-time slot availability, book in under 30 seconds, and receive instant SMS confirmation with their token number and room details. The hospital admin gets a live dashboard to manage schedules and track no-shows automatically.</p>
+      </div>
+    </div>
+    <div class="results">
+      <div class="res-item"><div class="res-num">0 min</div><div class="res-lbl">Queue Wait Time</div></div>
+      <div class="res-item"><div class="res-num">850+</div><div class="res-lbl">Bookings / Month</div></div>
+      <div class="res-item"><div class="res-num">4.9★</div><div class="res-lbl">Patient Satisfaction</div></div>
+    </div>
+  </div>
+
+
+    <!-- ── CASE 3: SHOPPING PUNCH ── -->
+   <div class="case-card fi">
+    <div class="case-top">
+      <div class="case-top-left">
+        <div class="case-num">03</div>
+        <div>
+          <div class="case-industry">🍕 Food Delivery</div>
+          <div class="case-title">Food Delivery Platform — Late Orders to Real-time Tracking</div>
+        </div>
+      </div>
+      <div class="case-chips">
+        <span class="chip red">❌ Late Deliveries</span>
+        <span class="chip blue">React</span>
+        <span class="chip blue">Node.js</span>
+        <span class="chip blue">Socket.io</span>
+        <span class="chip blue">MongoDB</span>
+        <span class="chip green">✅ On-time</span>
+      </div>
+    </div>
+
+    <div class="ba-split">
+      <!-- BEFORE -->
+      <div class="ba-col">
+        <div class="ba-col-head bef">❌ Before — No Tracking, Late Orders</div>
+        <div class="screen-wrap">
+          <svg viewBox="0 0 440 380" xmlns="http://www.w3.org/2000/svg">
+            <rect width="440" height="380" fill="#0a0c14"/>
+            <rect width="440" height="34" fill="#111520"/>
+            <circle cx="14" cy="17" r="5" fill="#ff5f57"/><circle cx="28" cy="17" r="5" fill="#febc2e"/><circle cx="42" cy="17" r="5" fill="#28c840"/>
+            <rect x="60" y="10" width="220" height="14" rx="4" fill="#1a1f30"/>
+            <text x="170" y="21" font-size="7" fill="#5a6080" font-family="monospace">food-old.com (broken ordering)</text>
+
+            <rect y="34" width="440" height="346" fill="#0f1220"/>
+
+            <!-- Nav -->
+            <rect y="34" width="440" height="32" fill="#111520"/>
+            <text x="20" y="54" font-size="9" fill="#f87171" font-weight="bold">🍔 QuickBites</text>
+            <rect x="340" y="40" width="80" height="18" rx="4" fill="#2a1010"/>
+            <text x="380" y="52" font-size="6.5" fill="#f87171" text-anchor="middle">SITE DOWN ⚠</text>
+
+            <!-- Error order page -->
+            <rect x="10" y="74" width="420" height="30" rx="6" fill="#450a0a" stroke="#ef4444" stroke-width="1.5"/>
+            <text x="22" y="86" font-size="8" fill="#f87171" font-weight="bold">⚠ Order Failed — Payment gateway timeout</text>
+            <text x="22" y="99" font-size="6.5" fill="#fca5a5">Your order could not be placed. Your card may have been charged. Please contact support. (Error 408)</text>
+
+            <!-- Old confusing menu -->
+            <text x="22" y="122" font-size="9" fill="#e8edf5" font-weight="bold">Our Menu</text>
+            <!-- Items with no images, confusing layout -->
+            <rect x="10" y="128" width="200" height="55" rx="6" fill="#1a1f30" stroke="#2a3050" stroke-width="1"/>
+            <rect x="18" y="136" width="40" height="40" rx="4" fill="#0a0c14"/>
+            <text x="38" y="162" font-size="14" text-anchor="middle">❓</text>
+            <text x="68" y="148" font-size="7.5" fill="#e8edf5">Burger Meal</text>
+            <text x="68" y="161" font-size="6.5" fill="#5a6080">Description not available</text>
+            <text x="68" y="173" font-size="7" fill="#f87171">Rs. ??? (price unclear)</text>
+            <rect x="155" y="148" width="45" height="16" rx="3" fill="#2a2f45"/>
+            <text x="177" y="159" font-size="6" fill="#5a6080" text-anchor="middle">Add to Cart</text>
+
+            <rect x="220" y="128" width="210" height="55" rx="6" fill="#1a1f30" stroke="#2a3050" stroke-width="1"/>
+            <rect x="228" y="136" width="40" height="40" rx="4" fill="#0a0c14"/>
+            <text x="248" y="162" font-size="14" text-anchor="middle">❓</text>
+            <text x="278" y="148" font-size="7.5" fill="#e8edf5">Pizza (Large?)</text>
+            <text x="278" y="161" font-size="6.5" fill="#5a6080">Out of stock maybe?</text>
+            <text x="278" y="173" font-size="7" fill="#fbbf24">Rs. 850 (+ hidden charges?)</text>
+
+            <!-- No tracking section -->
+            <rect x="10" y="192" width="420" height="55" rx="6" fill="#1a0a0a" stroke="#7f1d1d" stroke-width="1"/>
+            <text x="22" y="208" font-size="8" fill="#f87171" font-weight="bold">📦 Order Status: UNKNOWN</text>
+            <text x="22" y="222" font-size="7" fill="#fca5a5">❌ No tracking available — we don't know where your order is</text>
+            <text x="22" y="234" font-size="7" fill="#fca5a5">❌ Estimated time: "2–3 hours... or maybe longer" (no real ETA)</text>
+            <text x="22" y="246" font-size="6.5" fill="#5a6080">Please call +92-XXX-XXXXXXX to ask about your order status</text>
+
+            <!-- Customer complaints -->
+            <rect x="10" y="256" width="420" height="100" rx="6" fill="#0f1220" stroke="#2a3050" stroke-width="1"/>
+            <text x="22" y="272" font-size="8" fill="#e8edf5" font-weight="bold">😤 Customer Reviews:</text>
+            <rect x="18" y="278" width="390" height="22" rx="4" fill="#1a1f30"/>
+            <text x="28" y="291" font-size="6.5" fill="#fca5a5">⭐ "Ordered 2 hrs ago, food still not here, no way to track. Never ordering again."</text>
+            <rect x="18" y="304" width="390" height="22" rx="4" fill="#1a1f30"/>
+            <text x="28" y="317" font-size="6.5" fill="#fca5a5">⭐ "Payment went through twice and I got 0 orders. Support phone never answers."</text>
+            <rect x="18" y="328" width="390" height="22" rx="4" fill="#1a1f30"/>
+            <text x="28" y="341" font-size="6.5" fill="#fca5a5">⭐ "Food arrived cold after 3 hours. Asked for ETA and they said 'soon'. Unacceptable."</text>
+
+            <rect x="10" y="360" width="420" height="16" rx="0" fill="#0f1220"/>
+            <text x="22" y="372" font-size="6.5" fill="#f87171">📉 Order drop rate: 65% · Avg rating: 1.8★ · Monthly losses: Rs. 200,000+</text>
+          </svg>
+        </div>
+      </div>
+
+      <!-- AFTER -->
+      <div class="ba-col">
+        <div class="ba-col-head aft">✦ After — Fast Ordering + Live Tracking</div>
+        <div class="screen-wrap">
+          <svg viewBox="0 0 440 380" xmlns="http://www.w3.org/2000/svg">
+            <rect width="440" height="380" fill="#07090f"/>
+            <rect width="440" height="34" fill="#0a0c14"/>
+            <circle cx="14" cy="17" r="5" fill="#ff5f57"/><circle cx="28" cy="17" r="5" fill="#febc2e"/><circle cx="42" cy="17" r="5" fill="#28c840"/>
+            <rect x="60" y="10" width="220" height="14" rx="4" fill="#1a1f30"/>
+            <text x="170" y="21" font-size="7" fill="#34d399" font-family="monospace">✓ quickbites.com — Order Placed!</text>
+
+            <rect y="34" width="440" height="346" fill="#07090f"/>
+
+            <!-- Nav -->
+            <rect y="34" width="440" height="32" fill="#0c0f1a"/>
+            <text x="20" y="54" font-size="9" fill="#fbbf24" font-weight="bold">🍕 QuickBites</text>
+            <text x="300" y="53" font-size="7" fill="#34d399">📍 Karachi, DHA</text>
+            <rect x="370" y="40" width="58" height="18" rx="9" fill="#2563eb"/>
+            <text x="399" y="52" font-size="6.5" fill="#fff" text-anchor="middle">🛒 Cart (3)</text>
+
+            <!-- Success order banner -->
+            <rect x="10" y="74" width="420" height="26" rx="6" fill="#052e16" stroke="#10b981" stroke-width="1.5"/>
+            <text x="22" y="85" font-size="7.5" fill="#34d399" font-weight="bold">🎉 Order #QB-2847 Confirmed! Payment received · Preparing now</text>
+            <text x="22" y="97" font-size="6.5" fill="#6ee7b7">Estimated delivery: 28 minutes · Track your order live below ↓</text>
+
+            <!-- FOOD MENU — beautiful -->
+            <text x="22" y="116" font-size="8" fill="#e8edf5" font-weight="bold">Popular Items 🔥</text>
+            <!-- Item 1 -->
+            <rect x="10" y="122" width="130" height="70" rx="8" fill="#0c0f1a" stroke="#1e2d50" stroke-width="1"/>
+            <rect x="14" y="126" width="122" height="40" rx="6" fill="#1a2035"/>
+            <text x="75" y="153" font-size="22" text-anchor="middle">🍔</text>
+            <text x="75" y="175" font-size="7" fill="#e8edf5" text-anchor="middle" font-weight="bold">Smash Burger</text>
+            <text x="75" y="185" font-size="6" fill="#34d399" text-anchor="middle">Rs. 650 · ⭐4.9</text>
+            <!-- Item 2 -->
+            <rect x="148" y="122" width="130" height="70" rx="8" fill="#0c0f1a" stroke="#1e40af" stroke-width="1.5"/>
+            <rect x="152" y="126" width="122" height="40" rx="6" fill="#1a2035"/>
+            <text x="213" y="153" font-size="22" text-anchor="middle">🍕</text>
+            <text x="213" y="175" font-size="7" fill="#e8edf5" text-anchor="middle" font-weight="bold">BBQ Pizza</text>
+            <text x="213" y="185" font-size="6" fill="#34d399" text-anchor="middle">Rs. 950 · ⭐4.8</text>
+            <!-- Item 3 -->
+            <rect x="286" y="122" width="130" height="70" rx="8" fill="#0c0f1a" stroke="#1e2d50" stroke-width="1"/>
+            <rect x="290" y="126" width="122" height="40" rx="6" fill="#1a2035"/>
+            <text x="351" y="153" font-size="22" text-anchor="middle">🥤</text>
+            <text x="351" y="175" font-size="7" fill="#e8edf5" text-anchor="middle" font-weight="bold">Combo Meal</text>
+            <text x="351" y="185" font-size="6" fill="#34d399" text-anchor="middle">Rs. 1200 · ⭐5.0</text>
+
+            <!-- LIVE TRACKING -->
+            <rect x="10" y="200" width="260" height="165" rx="10" fill="#0c0f1a" stroke="#1e2d50" stroke-width="1"/>
+            <text x="20" y="218" font-size="8" fill="#e8edf5" font-weight="bold">📍 Live Order Tracking</text>
+            <text x="20" y="230" font-size="6.5" fill="#34d399">● LIVE — updating every 10 seconds</text>
+
+            <!-- Progress steps -->
+            <rect x="20" y="238" width="240" height="6" rx="3" fill="#1e2d50"/>
+            <rect x="20" y="238" width="160" height="6" rx="3" fill="#10b981"/>
+
+            <text x="20" y="258" font-size="6.5" fill="#34d399">✅ Order Confirmed (2:14 PM)</text>
+            <text x="20" y="272" font-size="6.5" fill="#34d399">✅ Kitchen Preparing (2:16 PM)</text>
+            <text x="20" y="286" font-size="6.5" fill="#fbbf24">🔄 Rider Picked Up (2:29 PM) ← YOU ARE HERE</text>
+            <text x="20" y="300" font-size="6.5" fill="#3a4560">⏳ Out for Delivery</text>
+            <text x="20" y="314" font-size="6.5" fill="#3a4560">⏳ Delivered</text>
+
+            <!-- ETA -->
+            <rect x="20" y="322" width="240" height="36" rx="8" fill="#052e16" stroke="#10b981" stroke-width="1.5"/>
+            <text x="140" y="337" font-size="8" fill="#34d399" text-anchor="middle" font-weight="bold">🏍️ Rider: Zain is 1.2 km away</text>
+            <text x="140" y="352" font-size="7" fill="#6ee7b7" text-anchor="middle">ETA: 8 minutes · Call rider button →</text>
+
+            <!-- Right panel — order summary -->
+            <rect x="280" y="200" width="150" height="165" rx="10" fill="#0c0f1a" stroke="#1e2d50" stroke-width="1"/>
+            <text x="355" y="218" font-size="7.5" fill="#e8edf5" text-anchor="middle" font-weight="bold">Order Summary</text>
+            <rect x="290" y="224" width="130" height="1" fill="#1e2d50"/>
+
+            <text x="290" y="240" font-size="6.5" fill="#7a8aaa">1× Smash Burger</text>
+            <text x="405" y="240" font-size="6.5" fill="#e8edf5" text-anchor="end">Rs. 650</text>
+            <text x="290" y="254" font-size="6.5" fill="#7a8aaa">1× BBQ Pizza</text>
+            <text x="405" y="254" font-size="6.5" fill="#e8edf5" text-anchor="end">Rs. 950</text>
+            <text x="290" y="268" font-size="6.5" fill="#7a8aaa">1× Combo Meal</text>
+            <text x="405" y="268" font-size="6.5" fill="#e8edf5" text-anchor="end">Rs. 1200</text>
+            <rect x="290" y="274" width="130" height="1" fill="#1e2d50"/>
+
+            <text x="290" y="287" font-size="6.5" fill="#7a8aaa">Delivery fee</text>
+            <text x="405" y="287" font-size="6.5" fill="#34d399" text-anchor="end">FREE</text>
+            <text x="290" y="303" font-size="8" fill="#e8edf5" font-weight="bold">Total</text>
+            <text x="405" y="303" font-size="8" fill="#fbbf24" font-weight="bold" text-anchor="end">Rs. 2,800</text>
+
+            <rect x="290" y="310" width="130" height="20" rx="5" fill="#052e16" stroke="#10b981" stroke-width="1"/>
+            <text x="355" y="323" font-size="6.5" fill="#34d399" text-anchor="middle">✅ Paid · Easypaisa</text>
+            <text x="355" y="340" font-size="6" fill="#6ee7b7" text-anchor="middle">Receipt sent to SMS</text>
+
+            <!-- Reviews after delivery -->
+            <rect x="290" y="348" width="130" height="14" rx="3" fill="#2563eb"/>
+            <text x="355" y="358" font-size="6" fill="#fff" text-anchor="middle">Rate your order after delivery →</text>
+
+            <rect x="10" y="369" width="420" height="11" rx="0" fill="#0c0f1a"/>
+            <text x="22" y="378" font-size="6.5" fill="#34d399">✅ Orders up 280% · On-time delivery 97% · Avg rating 4.8★</text>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <div class="case-bottom">
+      <div class="cs-box chal">
+        <div class="cs-box-hd">🔴 Challenge</div>
+        <p>The food delivery website had a broken ordering system — payments failed with Error 408, no real-time tracking existed, and customers had no way to know where their food was. Orders were arriving 2–3 hours late with zero communication. 65% of customers were abandoning orders mid-checkout, and negative reviews were destroying the brand. Monthly losses exceeded Rs. 200,000.</p>
+      </div>
+      <div class="cs-box sol">
+        <div class="cs-box-hd">🔵 Solution</div>
+        <p>I rebuilt the entire platform — beautiful food menu with real photos and ratings, fast checkout with Easypaisa/JazzCash and card payments, real-time live order tracking powered by Socket.io (customers see exactly where their rider is), automated SMS updates at every stage, and a rider management dashboard. Food now arrives on time and customers can track every step from home.</p>
+      </div>
+    </div>
+    <div class="results">
+      <div class="res-item"><div class="res-num">+280%</div><div class="res-lbl">Orders Per Month</div></div>
+      <div class="res-item"><div class="res-num">97%</div><div class="res-lbl">On-time Delivery</div></div>
+      <div class="res-item"><div class="res-num">4.8★</div><div class="res-lbl">Customer Rating</div></div>
+    </div>
+  </div>
+
+</div>
+  </div>
+</div>
+</section>
+
+<div class="divider"></div>
+
+<!-- BACKEND -->
+<section id="backend" class="backend-section section-pad">
+<div class="container">
+  <div class="sec-label fi">Under the Hood</div>
+  <h2 class="sec-h2 fi">Backend &amp; <em>API</em> Expertise</h2>
+  <p class="sec-sub fi" style="color:rgba(232,237,245,.5);">Not just pretty pages — production-ready servers, secure APIs, and databases that scale.</p>
+
+  <!-- BACKEND BEFORE / AFTER -->
+  <div class="be-ba-wrap fi">
+    <div class="be-ba-title">Backend Transformation</div>
+    <div class="be-ba-grid">
+      <div class="be-ba-panel before-panel">
+        <div class="be-ba-top"><span class="bm-dot r"></span><span class="bm-dot a"></span><span class="bm-dot g"></span><span class="be-panel-lbl">Before — Typical Client Codebase</span></div>
+        <div class="be-ba-content">
+          <div class="be-bad">// No auth middleware</div>
+          <div class="be-bad">app.get('/users', (req,res) => {</div>
+          <div class="be-bad">&nbsp; const all = db.query('SELECT * FROM users')</div>
+          <div class="be-bad">&nbsp; res.json(all) // exposed everything</div>
+          <div class="be-bad">})</div>
+          <div style="height:.5rem;"></div>
+          <div class="be-bad">// Passwords stored in plain text</div>
+          <div class="be-bad">// No rate limiting → DDoS risk</div>
+          <div class="be-bad">// No error handling</div>
+          <div class="be-bad">// SQL injection vulnerable</div>
+        </div>
+      </div>
+      <div class="be-ba-panel after-panel">
+        <div class="be-ba-top"><span class="bm-dot r"></span><span class="bm-dot a"></span><span class="bm-dot g"></span><span class="be-panel-lbl">After — My Production Standard</span></div>
+        <div class="be-ba-content">
+          <div class="be-comment">// Secured, rate-limited, typed</div>
+          <div><span class="be-key">router</span>.<span class="be-code">get</span>(<span class="be-good">'/users/:id'</span>, [</div>
+          <div>&nbsp; <span class="be-code">verifyJWT</span>, <span class="be-code">checkRole</span>(<span class="be-good">'admin'</span>),</div>
+          <div>&nbsp; <span class="be-code">rateLimiter</span>, <span class="be-code">validateParams</span></div>
+          <div>], <span class="be-key">async</span> (req, res) => {</div>
+          <div>&nbsp; <span class="be-key">const</span> user = <span class="be-key">await</span> <span class="be-code">User</span>.<span class="be-code">findById</span>(req.params.id)</div>
+          <div>&nbsp; <span class="be-key">if</span> (!user) <span class="be-key">throw new</span> <span class="be-good">NotFoundError()</span></div>
+          <div>&nbsp; res.<span class="be-code">json</span>({ data: sanitize(user) })</div>
+          <div>})</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="backend-grid">
+    <div>
+      <div class="terminal fi">
+        <div class="term-bar"><div class="td r"></div><div class="td a"></div><div class="td g"></div><div class="term-title">api/server.js — Production</div></div>
+        <div class="term-body">
+<span class="tc">// Express API — Production Config</span>
+<span class="tk">import</span> { <span class="tv">express</span>, <span class="tv">helmet</span>, <span class="tv">cors</span> } <span class="tk">from</span> <span class="ts">'modules'</span>
+
+<span class="tk">const</span> <span class="tv">app</span> = <span class="tp">express</span>()
+
+app.<span class="tp">use</span>(<span class="tv">helmet</span>())
+app.<span class="tp">use</span>(<span class="tv">cors</span>({ origin: <span class="ts">allowedOrigins</span> }))
+app.<span class="tp">use</span>(<span class="tv">rateLimit</span>({ max: <span class="tn">100</span> }))
+app.<span class="tp">use</span>(<span class="ts">'/api/v1'</span>, <span class="tv">verifyJWT</span>)
+
+app.<span class="tp">use</span>(<span class="ts">'/api/v1/users'</span>,    <span class="tv">userRoutes</span>)
+app.<span class="tp">use</span>(<span class="ts">'/api/v1/orders'</span>,   <span class="tv">orderRoutes</span>)
+app.<span class="tp">use</span>(<span class="ts">'/api/v1/payments'</span>, <span class="tv">paymentRoutes</span>)
+app.<span class="tp">use</span>(<span class="tv">globalErrorHandler</span>)
+
+app.<span class="tp">listen</span>(<span class="tv">PORT</span>, () =>
+  console.<span class="tp">log</span>(<span class="ts">`✓ Server :${PORT}`</span>)<span class="blink-cur"></span>
+)
+        </div>
+      </div>
+      <div class="be-skills fi">
+        <div class="be-skill"><div class="be-skill-icon">🔐</div><div class="be-skill-title">Auth & Security</div><div class="be-skill-desc">JWT, refresh tokens, OAuth2, bcrypt, rate limiting, CSRF, Helmet.js</div></div>
+        <div class="be-skill"><div class="be-skill-icon">🗄️</div><div class="be-skill-title">Databases</div><div class="be-skill-desc">PostgreSQL, MongoDB, Redis caching, Prisma ORM, query optimization</div></div>
+        <div class="be-skill"><div class="be-skill-icon">☁️</div><div class="be-skill-title">Cloud & DevOps</div><div class="be-skill-desc">AWS EC2/S3, Docker, CI/CD, Nginx, GitHub Actions, Vercel</div></div>
+        <div class="be-skill"><div class="be-skill-icon">⚡</div><div class="be-skill-title">Real-time & Queues</div><div class="be-skill-desc">Socket.io, WebSockets, Bull queues, Redis pub/sub, webhooks</div></div>
+      </div>
+    </div>
+    <div>
+      <div class="api-list fi">
+        <div class="api-item"><div class="api-top"><span class="method get">GET</span><span class="api-path">/api/v1/users/:id</span><span class="api-ms">● 85ms</span></div><div class="api-bot">JWT auth · Redis cache · field projection · sanitized output</div></div>
+        <div class="api-item"><div class="api-top"><span class="method post">POST</span><span class="api-path">/api/v1/auth/login</span><span class="api-ms">● 120ms</span></div><div class="api-bot">bcrypt verify · refresh token rotation · device fingerprinting</div></div>
+        <div class="api-item"><div class="api-top"><span class="method post">POST</span><span class="api-path">/api/v1/payments/checkout</span><span class="api-ms">● 210ms</span></div><div class="api-bot">Stripe session · inventory lock · webhook confirmation</div></div>
+        <div class="api-item"><div class="api-top"><span class="method patch">PATCH</span><span class="api-path">/api/v1/orders/:id</span><span class="api-ms">● 95ms</span></div><div class="api-bot">Optimistic locking · audit log · Slack webhook notification</div></div>
+        <div class="api-item"><div class="api-top"><span class="method del">DELETE</span><span class="api-path">/api/v1/data/:id</span><span class="api-ms">● 60ms</span></div><div class="api-bot">Soft delete · 30-day undo window · cascade rules</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PROCESS -->
+<section id="process" class="process-section section-pad">
+<div class="container">
+  <div class="sec-label fi">How I Work</div>
+  <h2 class="sec-h2 fi">My <em>Process</em></h2>
+ <p class="section-subtitle">
+    A structured approach to deliver high-quality digital solutions.
+  </p>
+
+  <div class="timeline">
+
+    <!-- Phase 1 -->
+    <div class="phase">
+      <div class="circle">1</div>
+      <div class="content">
+        <h3>Discovery & Strategy</h3>
+        <p>We analyze your goals, business needs, and target audience.</p>
+        <div class="tags">
+          <span>Project Brief</span>
+          <span>Research</span>
+          <span>Analysis</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Phase 2 -->
+    <div class="phase">
+      <div class="circle">2</div>
+      <div class="content">
+        <h3>Planning & Proposal</h3>
+        <p>Clear roadmap with timeline, pricing, and deliverables.</p>
+        <div class="tags">
+          <span>Scope</span>
+          <span>Timeline</span>
+          <span>Pricing</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Phase 3 -->
+    <div class="phase">
+      <div class="circle">3</div>
+      <div class="content">
+        <h3>UI/UX Design</h3>
+        <p>Modern and user-friendly interface design with revisions.</p>
+        <div class="tags">
+          <span>Wireframes</span>
+          <span>Figma</span>
+          <span>Revisions</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Phase 4 -->
+    <div class="phase">
+      <div class="circle">4</div>
+      <div class="content">
+        <h3>Development</h3>
+        <p>Frontend and backend development with clean code.</p>
+        <div class="tags">
+          <span>Frontend</span>
+          <span>Backend</span>
+          <span>APIs</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Phase 5 -->
+    <div class="phase">
+      <div class="circle">5</div>
+      <div class="content">
+        <h3>Testing & Launch</h3>
+        <p>Bug-free testing and smooth deployment.</p>
+        <div class="tags">
+          <span>Testing</span>
+          <span>Fixing</span>
+          <span>Deploy</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Phase 6 -->
+    <div class="phase">
+      <div class="circle">6</div>
+      <div class="content">
+        <h3>Support</h3>
+        <p>Ongoing maintenance and updates.</p>
+        <div class="tags">
+          <span>Updates</span>
+          <span>Monitoring</span>
+          <span>Support</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CONTACT — WITH LIVE PROJECT PREVIEWS -->
+<section id="contact" class="contact-section">
+<div class="contact-glow"></div>
+
+
+
+<div class="contact-inner">
+  <div class="sec-label fi" style="justify-content:center;">Available Now</div>
+  <h2 class="contact-h fi">Let's Build<br><em>Something Real.</em></h2>
+  <p class="contact-sub fi">Quick landing page or full SaaS platform — I'm ready. Fast replies, honest quotes, real results.</p>
+  <div class="contact-email-wrap fi"><a href="mailto:codewithmanas47@gmail.com" class="contact-email">codewithmanas47@gmail.com</a></div>
+  <div class="contact-socials fi">
+    <a href="#" class="soc-btn">Upwork</a>
+    <a href="#" class="soc-btn">Fiverr</a>
+    <a href="#" class="soc-btn">LinkedIn</a>
+    <a href="#" class="soc-btn">GitHub</a>
+    <a href="+92 370 3418849" target="_blank" class="soc-btn">WhatsApp</a>
+  </div>
+</div>
+</section>
+
+<footer>
+  <span>© 2026 Muhammad Anas — Full Stack Developer</span>
+  <span>Karachi · Available Worldwide</span>
+</footer>
+
+<script>
+/* STARS */
+const canvas=document.getElementById('star-canvas');
+const ctx=canvas.getContext('2d');
+let W,H,stars=[];
+function initStars(){W=canvas.width=innerWidth;H=canvas.height=innerHeight;stars=[];for(let i=0;i<180;i++)stars.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.2+.2,a:Math.random(),s:Math.random()*.005+.001,drift:Math.random()*.15-.075});}
+function drawStars(){ctx.clearRect(0,0,W,H);stars.forEach(s=>{s.a+=s.s;if(s.a>1||s.a<0)s.s*=-1;s.x+=s.drift;if(s.x<0)s.x=W;if(s.x>W)s.x=0;ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fillStyle=`rgba(148,163,184,${s.a*.6})`;ctx.fill();});requestAnimationFrame(drawStars);}
+initStars();drawStars();window.addEventListener('resize',initStars);
+
+/* CURSOR */
+const ring=document.getElementById('cur-ring'),dot=document.getElementById('cur-dot');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;});
+(function animC(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.left=rx+'px';ring.style.top=ry+'px';dot.style.left=mx+'px';dot.style.top=my+'px';requestAnimationFrame(animC);})();
+document.querySelectorAll('a,button,.proj-card,.case-header,.proc-step,.htag,.soc-btn,.cps-card').forEach(el=>{el.addEventListener('mouseenter',()=>document.body.classList.add('h'));el.addEventListener('mouseleave',()=>document.body.classList.remove('h'));});
+
+/* PROJECT CARD GLOW */
+document.querySelectorAll('.proj-card').forEach(card=>{card.addEventListener('mousemove',e=>{const r=card.getBoundingClientRect();card.style.setProperty('--mx',((e.clientX-r.left)/r.width*100)+'%');card.style.setProperty('--my',((e.clientY-r.top)/r.height*100)+'%');});});
+
+/* SCROLL FADE */
+const io=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('v');});},{threshold:.07});
+document.querySelectorAll('.fi').forEach(el=>io.observe(el));
+
+/* STAGGER */
+const sio=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('go');sio.unobserve(x.target);}});},{threshold:.05});
+document.querySelectorAll('.stagger').forEach(el=>sio.observe(el));
+
+/* COUNTER */
+function animCounter(el,target){const dur=1600,t0=performance.now();const run=t=>{const p=Math.min((t-t0)/dur,1);const v=Math.round((1-Math.pow(1-p,3))*target);el.textContent=v+(v===target&&target!==100?'+':'');if(p<1)requestAnimationFrame(run);};requestAnimationFrame(run);}
+const cio=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){const v=parseInt(x.target.dataset.target);if(!isNaN(v)){animCounter(x.target,v);cio.unobserve(x.target);}}});},{threshold:.5});
+document.querySelectorAll('[data-target]').forEach(el=>cio.observe(el));
+
+/* CASE TOGGLE */
+function toggleCase(header){const item=header.parentElement;const isOpen=item.classList.contains('open');document.querySelectorAll('.case-card').forEach(i=>i.classList.remove('open'));if(!isOpen)item.classList.add('open');}
+
+/* NAV SHRINK */
+const nav=document.querySelector('nav');
+window.addEventListener('scroll',()=>{nav.style.padding=scrollY>80?'.7rem 3rem':'1rem 3rem';});
+
+/* MAGNETIC BUTTONS */
+document.querySelectorAll('.btn-primary,.btn-ghost,.nav-cta').forEach(btn=>{btn.addEventListener('mousemove',e=>{const r=btn.getBoundingClientRect();const dx=(e.clientX-r.left-r.width/2)*.25;const dy=(e.clientY-r.top-r.height/2)*.25;btn.style.transform=`translate(${dx}px,${dy}px)`;});btn.addEventListener('mouseleave',()=>{btn.style.transform='';});});
+const phases = document.querySelectorAll('.phase');
+
+window.addEventListener('scroll', () => {
+  phases.forEach(phase => {
+    const top = phase.getBoundingClientRect().top;
+    if (top < window.innerHeight - 100) {
+      phase.classList.add('show');
+    }
+  });
+});
+</script>
+</body>
+</html>
